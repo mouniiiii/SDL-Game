@@ -43,19 +43,6 @@ int main(int argc, char *args[])
     while (continuer)
     {
         int r = 1;
-        // while (r == 1)
-        //{
-        /*AfficherMain1(Main, screen);
-        displayText(t, screen);
-        AfficherBut1(B, screen, hover1, Presses);
-        AfficherBut2(B, screen, hover2, Presses);
-        AfficherBut3(B, screen, hover3, Presses);
-        SDL_Flip(screen);
-        AfficherMain2(Main, screen);
-        displayText(t, screen);
-        AfficherBut1(B, screen, hover1, Presses);
-        AfficherBut2(B, screen, hover2, Presses);
-        AfficherBut3(B, screen, hover3, Presses);*/
         for (i = 0; i < 10 && continuer; i++)
         {
             for (j = 0; j < 2; j++)
@@ -130,22 +117,18 @@ int main(int argc, char *args[])
                     {
                         hover1 = 0;
                         Presses = 5;
-
-                        // Mix_PlayChannel(-1, M.bref, 0);
                         Mix_FadeInChannel(-1, M.bref, 0, 0);
                     }
                     else if (event.motion.x > 430 && event.motion.x < 580 && event.motion.y > 350 && event.motion.y < 391)
                     {
                         hover2 = 0;
                         Presses = 5;
-                        // Mix_PlayChannel(-1, M.bref, 0);
                         Mix_FadeInChannel(-1, M.bref, 0, 0);
                     }
                     else if (event.motion.x > 430 && event.motion.x < 580 && event.motion.y > 450 && event.motion.y < 491)
                     {
                         hover3 = 0;
                         Presses = 5;
-                        // Mix_PlayChannel(-1, M.bref, 0);
                         Mix_FadeInChannel(-1, M.bref, 0, 0);
                     }
                     break;

@@ -5,15 +5,38 @@
 #include "Resource Menu/Header/Text.h"
 #include "Resource Menu/Header/Menu.h"
 
+#include "Resource Entite/ennemy.h"
+
 void NewGame(SDL_Surface *screen, int *Mode)
 {
+    SDL_Init(SDL_INIT_EVERYTHING);
     Background NGame;
     SDL_Event event;
+    Ennemi E;
+    personne p;
+    int die = 0;
     int continuer = 1;
+
     SDL_WM_SetCaption("NEW GAME", NULL);
     initBackNGame(&NGame);
+
+    initEnnemi(&E);
+
     while (continuer)
     {
+        /////////////////////////////////////////
+        afficherEnnemi(E, screen);
+        animerEnnemi(&E);
+        deplacer(&E);
+        // deplacerIA(&E, p.position_perso);
+        SDL_Flip(screen);
+        SDL_Delay(10);
+        // die = collisionBB(p, E);
+        //////////////////////////////////////////
+        if (die == 1)
+        {
+            // done = 0;
+        }
         SDL_PollEvent(&event);
         switch (event.type)
         {
@@ -35,11 +58,12 @@ void NewGame(SDL_Surface *screen, int *Mode)
         SDL_Flip(screen);
     }
     freeBackNGame(NGame);
+    freeEnnemy(E);
 }
 
 void Settings(SDL_Surface *screen, int *Mode, int *niv_volume, int *volume)
 {
-    // SDL_Init(SDL_INIT_EVERYTHING);
+    SDL_Init(SDL_INIT_EVERYTHING);
     //////////////////////////////
     SDL_Event event;
     Buttons B;
