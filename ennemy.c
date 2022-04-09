@@ -7,6 +7,8 @@ void initEnnemi(Ennemi *E)
     char loadR[40];
     char loadL[40];
 
+    E->Spike = NULL;
+
     E->Enemy[0][0] = NULL;
     E->Enemy[0][1] = NULL;
     E->Enemy[0][2] = NULL;
@@ -33,8 +35,12 @@ void initEnnemi(Ennemi *E)
         E->Enemy[1][i] = IMG_Load(loadR);
     }
 
+    E->Spike = IMG_Load("Resource Entite/Spike.png");
+    E->posSpike.x = 700;
+    E->posSpike.y = 560;
+
     E->posEnemy.x = 400;
-    E->posEnemy.y = 360;
+    E->posEnemy.y = 560;
     E->distance = 200;
     E->position_initiale = 150;
     E->num = 0;
@@ -81,7 +87,12 @@ void afficherEnnemi(Ennemi E, SDL_Surface *screen)
 {
     SDL_BlitSurface(E.Enemy[E.direction1 % 2][E.num], NULL, screen, &E.posEnemy);
 }
-/*
+
+void afficherEnnemi2(Ennemi E, SDL_Surface *screen)
+{
+    SDL_BlitSurface(E.Spike, NULL, screen, &E.posSpike);
+}
+
 int collisionBB(personne p, Ennemi E)
 {
     if ((p.position_perso.x + p.sprite[p.num]->w > E.posEnemy.x) && (p.position_perso.x < E.posEnemy.x))
@@ -92,11 +103,19 @@ int collisionBB(personne p, Ennemi E)
     {
         return 0;
     }
-}*/
+    if ((p.position_perso.x + p.sprite[p.num]->w > E.posSpike.x) && (p.position_perso.x < E.posSpike.x))
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+}
 
 void deplacerIA(Ennemi *e, SDL_Rect posperso)
 {
-    int dis = 200, dis2 = 150;
+    int dis = 200;
     if (posperso.x < e->posEnemy.x)
         e->direction = 1;
     else if (posperso.x + 100 > e->posEnemy.x)
@@ -106,9 +125,6 @@ void deplacerIA(Ennemi *e, SDL_Rect posperso)
         if (((posperso.x + dis) > e->posEnemy.x) && ((e->posEnemy.x - posperso.x) > 100))
         {
             e->posEnemy.x -= 3;
-            if ((e->posEnemy.x - posperso.x < dis2))
-            {
-            }
         }
     }
     else if (e->direction == 2)
@@ -116,13 +132,22 @@ void deplacerIA(Ennemi *e, SDL_Rect posperso)
         if (((posperso.x - e->posEnemy.x) < dis) && ((posperso.x - e->posEnemy.x) < 100))
         {
             e->posEnemy.x += 3;
-            if ((posperso.x - e->posEnemy.x < dis2))
-            {
-            }
         }
     }
-    //*direct = e.direction;
-    // return e;
+    /*
+    if (e->direction == 1)
+    {
+        e->direction1 = 0;
+    }
+    else
+    {
+        e->direction1 = 1;
+    }
+    */
+    if (e->direction1 != (e->direction + 1) % 2)
+    {
+        e->direction1 = (e->direction + 1) % 2;
+    }
 }
 
 void freeEnnemy(Ennemi E)
@@ -136,4 +161,5 @@ void freeEnnemy(Ennemi E)
             SDL_FreeSurface(E.Enemy[j][i]);
         }
     }
+    SDL_FreeSurface(E.Spike);
 }

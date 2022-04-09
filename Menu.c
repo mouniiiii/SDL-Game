@@ -26,6 +26,7 @@ void NewGame(SDL_Surface *screen, int *Mode)
     {
         /////////////////////////////////////////
         afficherEnnemi(E, screen);
+        afficherEnnemi2(E, screen);
         animerEnnemi(&E);
         deplacer(&E);
         // deplacerIA(&E, p.position_perso);

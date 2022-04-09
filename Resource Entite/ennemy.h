@@ -24,8 +24,10 @@ typedef struct
 typedef struct
 {
     SDL_Surface *Enemy[2][6];
-
     SDL_Rect posEnemy;
+
+    SDL_Surface *Spike;
+    SDL_Rect posSpike;
 
     int num;
 
@@ -40,6 +42,7 @@ typedef struct
 
 void initEnnemi(Ennemi *E);
 void afficherEnnemi(Ennemi E, SDL_Surface *screen);
+void afficherEnnemi2(Ennemi E, SDL_Surface *screen);
 void animerEnnemi(Ennemi *E);
 void deplacer(Ennemi *E);
 int collisionBB(personne P, Ennemi E);
