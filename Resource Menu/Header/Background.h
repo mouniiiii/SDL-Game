@@ -3,7 +3,7 @@
 
 typedef struct
 {
-    SDL_Surface *back[4];
+    SDL_Surface *back[3];
     SDL_Rect positionBack;
 } Background;
 
@@ -14,7 +14,7 @@ void initBackSet(Background *Back);
 
 //////////////////////////////
 void AfficherMain1(Background Main, SDL_Surface *screen);
-void AfficherMain2(Background Main, SDL_Surface *screen);
+// void AfficherMain2(Background Main, SDL_Surface *screen);
 void AfficherNGame(Background NGame, SDL_Surface *screen);
 void AfficherSet(Background Set, SDL_Surface *screen);
 
@@ -24,6 +24,6 @@ void freeBackNGame(Background Back);
 void freeBackSet(Background Back);
 
 ///
-void AfficherMain(Background Main, SDL_Surface *screen, int i);
+void AfficherMain(Background Main, SDL_Surface *screen);
 
 #endif /* BACKGROUND */

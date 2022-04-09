@@ -30,6 +30,7 @@ void NewGame(SDL_Surface *screen, int *Mode)
         deplacer(&E);
         // deplacerIA(&E, p.position_perso);
         SDL_Flip(screen);
+
         SDL_Delay(10);
         // die = collisionBB(p, E);
         //////////////////////////////////////////

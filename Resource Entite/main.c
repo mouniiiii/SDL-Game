@@ -31,7 +31,7 @@ int main(int argc, char const *argv[])
         printf("%d\n", E.num);
         if (die == 1)
         {
-            // done = 0;
+            // condition du colision
         }
 
         SDL_PollEvent(&event);
