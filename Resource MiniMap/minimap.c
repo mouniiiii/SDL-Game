@@ -72,7 +72,7 @@ fclose(fichier);
 
 void meilleur( char nomfichier[], int *score, char nomjoueur[])
 {
-int scr=0;
+
 int max=0;
 
 FILE *fichier;
