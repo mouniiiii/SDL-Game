@@ -5,6 +5,8 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include "Resource MiniMap/minimap.h"
+
 void init_map (minimap *m)
 { m -> map = IMG_Load("minimap2.png");
   m-> minijoueur = IMG_Load("playermap.png");
