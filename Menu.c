@@ -4,7 +4,7 @@
 #include "Resource Menu/Header/Buttons.h"
 #include "Resource Menu/Header/Text.h"
 #include "Resource Menu/Header/Menu.h"
-
+#include "Resource MiniMap/minimap.h"
 #include "Resource Entite/ennemy.h"
 
 void NewGame(SDL_Surface *screen, int *Mode)
