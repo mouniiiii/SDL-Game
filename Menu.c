@@ -15,6 +15,13 @@
 
 void NewGame(SDL_Surface *screen, int *Mode)
 {
+    FILE *fichier=NULL;
+    fichier=fopen("nomficher.txt","a+");
+    TTF_Init();
+    TTF_Font *police=NULL;
+    SDL_Color Color={255,255,255};
+    police=TTF_OpenFont("pol.ttf",50);
+    
     SDL_Init(SDL_INIT_EVERYTHING);
     Background NGame;
     SDL_Event event;
@@ -26,6 +33,9 @@ void NewGame(SDL_Surface *screen, int *Mode)
     Uint32 dt = 1, t_prev = 1;
     int impulsion = 6;
     int i;
+    SDL_Rect camera;
+    minimap m;
+    int temps;
     /////////////////////
     int die = 0;
     int continuer = 1;
@@ -36,6 +46,7 @@ void NewGame(SDL_Surface *screen, int *Mode)
 
     initperso(&S);
     initEnnemi(&E);
+    init_map(&m);
     /////////////////////
 
     while (continuer)
@@ -124,10 +135,14 @@ void NewGame(SDL_Surface *screen, int *Mode)
     {
         SDL_FreeSurface(S.sprite[i]);
     }
+    afficherminimap(m,screen);
+    affichertemp(&temps,screen,police);
+    MAJMinimap(s.position_perso,  &m, camera, 20);
     SDL_FreeSurface(S.jeu.HUD_etoiles);
     SDL_FreeSurface(S.jeu.HUD_vie);
     freeBackNGame(NGame);
     freeEnnemy(E);
+    fclose(fichier);
 }
 
 void Settings(SDL_Surface *screen, int *Mode, int *niv_volume, int *volume)
