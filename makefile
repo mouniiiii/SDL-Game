@@ -1,5 +1,5 @@
 menu:main.o Menu.o Music.o Text.o Buttons.o Background.o ennemy.o minimap.o
-	gcc main.o Menu.o Music.o minimap.o Text.o Buttons.o Background.o ennemy.o -o menu -lSDL -lSDL_image -lSDL_mixer -lSDL_ttf -g
+	gcc main.o Menu.o Music.o minimap.o Text.o Buttons.o Background.o ennemy.o collisionparfaite.o -o menu -lSDL -lSDL_image -lSDL_mixer -lSDL_ttf -g
 main.o:main.c
 	gcc -c main.c -g
 Menu.o:Menu.c
@@ -16,3 +16,6 @@ ennemy.o:ennemy.c
 	gcc -c ennemy.c -g
 minimap.o:minimap.c
 	gcc -c minimap.c -g
+background.o: background.c 
+	gcc -c background.c -g
+ 
