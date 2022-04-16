@@ -4,8 +4,12 @@
 #include "Resource Menu/Header/Buttons.h"
 #include "Resource Menu/Header/Text.h"
 #include "Resource Menu/Header/Menu.h"
-#include "Resource MiniMap/minimap.h"
+#include "Resource Perso/personnage.h"
+#include "Resource Back/background.h"
+#include "Resource Back/collisionparfaite.h"
 #include "Resource Entite/ennemy.h"
+#include "Resource MiniMap/minimap.h"
+#include "Resource Enigme 6/EnigmeSF.h"
 
 void NewGame(SDL_Surface *screen, int *Mode)
 {
@@ -13,7 +17,6 @@ void NewGame(SDL_Surface *screen, int *Mode)
     Background NGame;
     SDL_Event event;
     Ennemi E;
-    personne p;
     int die = 0;
     int continuer = 1;
 
