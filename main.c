@@ -5,7 +5,6 @@
 #include "Resource Menu/Header/Buttons.h"
 #include "Resource Menu/Header/Menu.h"
 #include "Resource Menu/Header/Background.h"
-#include "Resource MiniMap"
 
 int main(int argc, char *args[])
 {

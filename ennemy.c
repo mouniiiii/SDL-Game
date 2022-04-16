@@ -1,4 +1,5 @@
 #include "Resource Entite/ennemy.h"
+#include "Resource Perso/personnage.h"
 
 void initEnnemi(Ennemi *E)
 {
@@ -134,6 +135,7 @@ void deplacerIA(Ennemi *e, SDL_Rect posperso)
             e->posEnemy.x += 3;
         }
     }
+
     /*
     if (e->direction == 1)
     {

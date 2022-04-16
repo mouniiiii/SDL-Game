@@ -5,21 +5,8 @@
 #include <SDL/SDL_image.h>
 #include <stdio.h>
 #include <stdlib.h>
-/////////////////////////
-typedef struct
-{
-    SDL_Surface *sprite[6];
-
-    SDL_Rect position_perso;
-
-    int num;
-
-    int direction1;
-
-    int distance;
-
-    int position_initiale;
-} personne;
+#include "/home/ghaith/Game/Resource Perso/personnage.h"
+////////////////////////
 ////////////////////////
 typedef struct
 {

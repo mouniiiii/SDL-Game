@@ -4,35 +4,52 @@
 #include "Resource Menu/Header/Buttons.h"
 #include "Resource Menu/Header/Text.h"
 #include "Resource Menu/Header/Menu.h"
+////////////////////////////////////////
 #include "Resource Perso/personnage.h"
 #include "Resource Back/background.h"
 #include "Resource Back/collisionparfaite.h"
 #include "Resource Entite/ennemy.h"
 #include "Resource MiniMap/minimap.h"
 #include "Resource Enigme 6/EnigmeSF.h"
+////////////////////////////////////////
 
 void NewGame(SDL_Surface *screen, int *Mode)
 {
     SDL_Init(SDL_INIT_EVERYTHING);
     Background NGame;
     SDL_Event event;
+    /////////////////////
     Ennemi E;
+    background ba, bm;
+    personne S;
+    Uint8 *keys;
+    Uint32 dt = 1, t_prev = 1;
+    int impulsion = 6;
+    int i;
+    /////////////////////
     int die = 0;
     int continuer = 1;
 
     SDL_WM_SetCaption("NEW GAME", NULL);
     initBackNGame(&NGame);
+    /////////////////////
 
+    initperso(&S);
     initEnnemi(&E);
+    /////////////////////
 
     while (continuer)
     {
+        /////////////////////
+        t_prev = SDL_GetTicks();
+        afficherperso(&S, screen);
         /////////////////////////////////////////
         afficherEnnemi(E, screen);
         afficherEnnemi2(E, screen);
         animerEnnemi(&E);
         deplacer(&E);
         // deplacerIA(&E, p.position_perso);
+        AfficherNGame(NGame, screen);
         SDL_Flip(screen);
 
         SDL_Delay(10);
@@ -59,9 +76,56 @@ void NewGame(SDL_Surface *screen, int *Mode)
             }
             break;
         }
-        AfficherNGame(NGame, screen);
-        SDL_Flip(screen);
+        //////////////////////////////////////
+        keys = SDL_GetKeyState(NULL);
+        if (keys[SDLK_RIGHT] == 0 && keys[SDLK_LEFT] == 0 && keys[SDLK_j] == 0 && keys[SDLK_UP] == 0 && keys[SDLK_w] == 0)
+        {
+            S.direction = -1;
+            S.deplacement = -1;
+        }
+        if (keys[SDLK_RIGHT] == 1)
+        {
+            S.deplacement = 1;
+            S.direction = 0;
+        }
+        if (keys[SDLK_j])
+        {
+            S.direction = 2;
+        }
+        if (keys[SDLK_w])
+        {
+            S.direction = 4;
+        }
+        if (keys[SDLK_a])
+        {
+            S.acceleration = 0;
+        }
+        if (keys[SDLK_f])
+        {
+            S.vi = 1;
+        }
+        if (keys[SDLK_LEFT])
+        {
+            S.deplacement = 0;
+            S.direction = 1;
+        }
+        if (keys[SDLK_UP] && S.etat == ETAT_SOL)
+        {
+            Saute(&S, impulsion);
+            S.direction = 3;
+        }
+        animerperso(&S);
+        deplacerperso(&S, dt);
+        Updateperso(&S, keys);
+        dt = SDL_GetTicks() - t_prev;
+        //////////////////////////////////////
     }
+    for (i = 0; i < 20; i++)
+    {
+        SDL_FreeSurface(S.sprite[i]);
+    }
+    SDL_FreeSurface(S.jeu.HUD_etoiles);
+    SDL_FreeSurface(S.jeu.HUD_vie);
     freeBackNGame(NGame);
     freeEnnemy(E);
 }

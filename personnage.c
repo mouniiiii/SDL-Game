@@ -15,7 +15,7 @@ void initperso(personne *p)
     p->position_vie.x = 50;
     p->position_vie.y = 50;
     p->fig = 0;
-    char nomFich[20];
+    char nomFich[50];
     int i;
     for (i = 0; i < 20; i++)
     {
