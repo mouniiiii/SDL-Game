@@ -18,4 +18,5 @@ minimap.o:minimap.c
 	gcc -c minimap.c -g
 background.o: background.c 
 	gcc -c background.c -g
+
  
