@@ -17,11 +17,11 @@
 void NewGame(SDL_Surface *screen, int *Mode)
 {
     FILE *fichier = NULL;
-    fichier = fopen("nomficher.txt", "a+");
+    fichier = fopen("Resource MiniMap/nomficher.txt", "a+");
     TTF_Init();
     TTF_Font *police = NULL;
     SDL_Color Color = {255, 255, 255};
-    police = TTF_OpenFont("pol.ttf", 50);
+    police = TTF_OpenFont("Resource MiniMap/pol.ttf", 50);
 
     SDL_Init(SDL_INIT_EVERYTHING);
     Background NGame;
