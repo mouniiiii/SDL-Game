@@ -73,7 +73,9 @@ fclose(fichier);
 void meilleur( char nomfichier[], int *score, char nomjoueur[])
 {
 
-int max=0;
+int auxs=0;
+int scord=0;
+char aux_nom[30];
 
 FILE *fichier;
 
@@ -81,14 +83,15 @@ fichier=fopen("nomfichier.txt","r+");
 
 if(fichier!=NULL)
 {
-while(fscanf(fichier,"%s %d",nomjoueur,score)!=EOF)
+while(fscanf(fichier,"%s %d",nomjoueur,&scord)!=EOF)
 {
-if(*score>max)
+if(scord>auxs)
 {
-max=*score;
+*score=scord;
+strcpy(nomjoueur,aux_nom);
 }
 }
-printf("le score max est : %d ",max);
+
 fclose(fichier);
 }
 }
