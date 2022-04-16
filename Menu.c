@@ -10,18 +10,19 @@
 #include "Resource Back/collisionparfaite.h"
 #include "Resource Entite/ennemy.h"
 #include "Resource MiniMap/minimap.h"
+#include "Resource Enigme5/enigme.h"
 #include "Resource Enigme 6/EnigmeSF.h"
 ////////////////////////////////////////
 
 void NewGame(SDL_Surface *screen, int *Mode)
 {
-    FILE *fichier=NULL;
-    fichier=fopen("nomficher.txt","a+");
+    FILE *fichier = NULL;
+    fichier = fopen("nomficher.txt", "a+");
     TTF_Init();
-    TTF_Font *police=NULL;
-    SDL_Color Color={255,255,255};
-    police=TTF_OpenFont("pol.ttf",50);
-    
+    TTF_Font *police = NULL;
+    SDL_Color Color = {255, 255, 255};
+    police = TTF_OpenFont("pol.ttf", 50);
+
     SDL_Init(SDL_INIT_EVERYTHING);
     Background NGame;
     SDL_Event event;
@@ -64,11 +65,11 @@ void NewGame(SDL_Surface *screen, int *Mode)
         SDL_Flip(screen);
 
         SDL_Delay(10);
-        // die = collisionBB(p, E);
+        die = collisionBB(S, E);
         //////////////////////////////////////////
         if (die == 1)
         {
-            // done = 0;
+            continuer = 0; // exemple
         }
         SDL_PollEvent(&event);
         switch (event.type)
@@ -135,9 +136,9 @@ void NewGame(SDL_Surface *screen, int *Mode)
     {
         SDL_FreeSurface(S.sprite[i]);
     }
-    afficherminimap(m,screen);
-    affichertemp(&temps,screen,police);
-    MAJMinimap(s.position_perso,  &m, camera, 20);
+    afficherminimap(m, screen);
+    affichertemp(&temps, screen, police);
+    MAJMinimap(S.position_perso, &m, camera, 20);
     SDL_FreeSurface(S.jeu.HUD_etoiles);
     SDL_FreeSurface(S.jeu.HUD_vie);
     freeBackNGame(NGame);
