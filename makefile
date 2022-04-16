@@ -1,5 +1,5 @@
-menu:main.o Menu.o Music.o Text.o Buttons.o BackgroundM.o ennemy.o minimap.o background.o collisionparfaite.o EnigmeSF.o personnage.o
-	gcc main.o Menu.o Music.o minimap.o Text.o Buttons.o BackgroundM.o ennemy.o background.o collisionparfaite.o EnigmeSF.o personnage.o -o menu -lSDL -lSDL_image -lSDL_mixer -lSDL_ttf -g
+menu:main.o Menu.o Music.o Text.o Buttons.o BackgroundM.o ennemy.o minimap.o background.o collisionparfaite.o EnigmeSF.o personnage.o enigme.o
+	gcc main.o Menu.o Music.o minimap.o Text.o Buttons.o BackgroundM.o ennemy.o background.o collisionparfaite.o EnigmeSF.o personnage.o enigme.o -o menu -lSDL -lSDL_image -lSDL_mixer -lSDL_ttf -g
 main.o:main.c
 	gcc -c main.c -g
 Menu.o:Menu.c
@@ -24,3 +24,5 @@ EnigmeSF.o:EnigmeSF.c
 	gcc -c EnigmeSF.c -g
 personnage.o:personnage.c 
 	gcc -c personnage.c -g
+enigme.o:enigme.c
+	gcc -c enigme.c -g
