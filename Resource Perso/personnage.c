@@ -23,33 +23,20 @@ for(i=0;i<20;i++)
     sprintf(nomFich,"image/sprite%d.png",i);
     p->sprite[i]=IMG_Load(nomFich);
 }
-char nomvie[20];
-int j;
-for(j=0;j<3;j++)
-{
-    sprintf(nomvie,"image/vie%d.png",j);
-    p->vie[j]=IMG_Load(nomvie);
-}
+ p->jeu.HUD_vie = IMG_Load("image/life.png");
+ p->jeu.HUD_etoiles = IMG_Load("image/stars.png");
 
+ p->jeu.vies = 3;
+ p->jeu.etoiles = 0;
+ p->score = 0;
 }
-
-
-void Miseajour(personne* p,SDL_Surface* screen)
-{
-   
-      p->position_perso.x =p->x;          
-      p->position_perso.y= p->y;
-      p->position_perso.w= 20;
-      p->position_perso.h = 40;
-  
-}
- 
 
 void afficherperso(personne* p,SDL_Surface *ecran)
 {  
 //SDL_FillRect(ecran,NULL,SDL_MapRGB(ecran->format,0,0,0));
 SDL_BlitSurface(p->sprite[p->num],NULL,ecran,&(p->position_perso));
-SDL_BlitSurface(p->vie[p->vi],NULL,ecran,&(p->position_vie));
+//SDL_BlitSurface(p->vie[0],NULL,ecran,&(p->position_vie));
+drawHud(p,ecran);
 
 }
 
@@ -57,7 +44,7 @@ SDL_BlitSurface(p->vie[p->vi],NULL,ecran,&(p->position_vie));
 
 void Saute(personne* p,float impulsion)
 {
-    p->vy = -impulsion;             
+    p->vy = -impulsion;        
     p->etat = ETAT_AIR;            
 }
 
@@ -65,42 +52,19 @@ void Saute(personne* p,float impulsion)
 
 
 void deplacerperso(personne *p,Uint32 dt)
-{ if(p->position_perso.x ==100)
-  {
-      ControleSol(p);
-  }
+{ 
     p->dx = (0.5*p->acceleration)*dt*dt+(p->vitesse)*dt;//CALCUL DE LA DISTANCE ENGENDRE
- if(p->deplacement==1)
+ if(p->deplacement==1 && p->x <400)
  {
   p->x+=(p->dx);
+  (p->score)++;
  }
-else if(p->deplacement==0)
+else if(p->deplacement==0 && p->x >50)
  {
     p->x-=(p->dx);
  }
   
 }
-
-
-
-void ControleSol(personne* p)
-{
-    if (p->y>380)    
-    {
-        p->y = 380;
-        if (p->vy>0)
-            p->vy = 0.0f;
-        p->etat = ETAT_SOL;
-    }
-}
-
-void Gravite(personne* p,float factgravite,float factsautmaintenu,Uint8* keys)
-{
-    if (p->etat == ETAT_AIR &&( keys[SDLK_UP]||keys[SDLK_z]))
-        factgravite/=factsautmaintenu; 
-    p->vy += factgravite;
-}
-
 
 void animerperso(personne* p)
  {  
@@ -149,15 +113,100 @@ void Updateperso(personne* p,Uint8* keys)
     float factgravite = 0.5;
     float factsautmaintenu = 3;
  
-    Gravite(p,factgravite,factsautmaintenu,keys);
-    ControleSol(p);
+    if (p->etat == ETAT_AIR &&( keys[SDLK_UP]||keys[SDLK_z]))
+    {
+        factgravite/=factsautmaintenu; }
+        p->vy += factgravite;
+
+
+    if (p->y>380)    
+    {
+        p->y = 380;
+        if (p->vy>0)
+            p->vy = 0.0f;
+        p->etat = ETAT_SOL;
+    }
       
     p->x +=p->vx;
     p->y +=p->vy;
 
-
+      p->position_perso.x =p->x;          
+      p->position_perso.y= p->y;
+      
 }
+void drawImage(SDL_Surface *image,SDL_Surface *screen, int x, int y)
+{
+	SDL_Rect dest;
 
+	/* Règle le rectangle à blitter selon la taille de l'image source */
+	dest.x = x;
+	dest.y = y;
+	dest.w = image->w;
+	dest.h = image->h;
+
+	/* Blitte l'image entière sur l'écran aux coordonnées x et y */
+	SDL_BlitSurface(image, NULL,screen, &dest);
+}
+void drawString(char *text,SDL_Surface *screen, int x, int y, TTF_Font *font)
+{
+	SDL_Rect dest;
+	SDL_Surface *surface;
+	SDL_Color foregroundColor;
+
+	/* On choisit d'écrire le texte en noir */
+	foregroundColor.r = 0;
+	foregroundColor.g = 0;
+	foregroundColor.b = 0;
+
+	/* On utilise SDL_TTF pour générer une SDL_Surface à partir d'une chaîne de caractères (string) */
+
+	surface = TTF_RenderUTF8_Blended(font, text, foregroundColor);
+
+	if (surface == NULL)
+	{
+		printf("Couldn't create String %s: %s\n", text, SDL_GetError());
+		return;
+	}
+
+	/* On blitte cette SDL_Surface à l'écran */
+	dest.x = x;
+	dest.y = y;
+	dest.w = surface->w;
+	dest.h = surface->h;
+
+	SDL_BlitSurface(surface, NULL,screen, &dest);
+
+	/* On libère la SDL_Surface temporaire (pour éviter les fuites de mémoire - cf. chapitre dédié) */
+	SDL_FreeSurface(surface);
+}
+void drawHud(personne *p,SDL_Surface *screen)
+{
+    //On crée une varuiable qui contiendra notre texte (jusqu'à 200 caractères, y'a de la marge ;) ).
+    char text[200];
+     TTF_Font *font = TTF_OpenFont("GenBasB.ttf",30);
+    /* Affiche le nombre de vies en bas à droite */
+    drawImage(p->jeu.HUD_vie,screen,480, 410);
+    //Pour afficher le nombre de vies, on formate notre string pour qu'il prenne la valeur de la variable
+    sprintf(text, "%d", p->jeu.vies);
+    //Puis on utilise notre fonction créée précédemment
+    drawString(text,screen, 560, 420, font);
+
+    /* Affiche le nombre d'étoiles en haut à gauche */
+    drawImage(p->jeu.HUD_etoiles,screen, 60, 60);
+    sprintf(text, "%d", p->jeu.etoiles);
+    drawString(text,screen, 100, 57, font);
+     
+     sprintf(text, "Score: %d", p->score);
+    drawString(text,screen, 300,70, font);
+   
+     FILE *f;
+		f=fopen("Score.txt","w");
+
+		
+			fprintf(f," %d \n ",p->score);
+
+			fclose(f);
+}
 
 
 

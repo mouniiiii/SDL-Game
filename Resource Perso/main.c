@@ -92,7 +92,7 @@ if(keys[SDLK_UP] && S.etat == ETAT_SOL)
     animerperso(&S);
     deplacerperso(&S,dt);
     Updateperso(&S,keys);
-    Miseajour(&S,screen);   
+    
     dt = SDL_GetTicks()-t_prev;     
  }
 
@@ -103,10 +103,8 @@ if(keys[SDLK_UP] && S.etat == ETAT_SOL)
  {
    SDL_FreeSurface(S.sprite[i]);
  }
- for(i=0;i<3;i++)
- {
-   SDL_FreeSurface(S.vie[i]);
- }
+ SDL_FreeSurface(S.jeu.HUD_etoiles);
+ SDL_FreeSurface(S.jeu.HUD_vie);
     SDL_Quit();
     return 0;
 }
