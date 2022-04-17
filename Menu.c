@@ -16,6 +16,7 @@
 
 void NewGame(SDL_Surface *screen, int *Mode)
 {
+    SDL_Init(SDL_INIT_EVERYTHING);
     FILE *fichier = NULL;
     fichier = fopen("Resource MiniMap/nomficher.txt", "a+");
     TTF_Init();
@@ -23,8 +24,6 @@ void NewGame(SDL_Surface *screen, int *Mode)
     SDL_Color Color = {255, 255, 255};
     police = TTF_OpenFont("Resource MiniMap/pol.ttf", 50);
 
-    SDL_Init(SDL_INIT_EVERYTHING);
-    Background NGame;
     SDL_Event event;
     /////////////////////
     Ennemi E;
@@ -34,13 +33,12 @@ void NewGame(SDL_Surface *screen, int *Mode)
     e.num_enigme = -1;
     int s, r = 0, run = 1, running = 1, alea;
     char image[30] = "";
-    int time = 0, r = 0;
+    int time = 0; //, r = 0;
     ///////////////////////
     ////wided decl/////
 
     background ba, bm;
 
-    SDL_Event event;
     ////////////////////
     personne S;
     Uint8 *keys;
@@ -55,7 +53,7 @@ void NewGame(SDL_Surface *screen, int *Mode)
     int continuer = 1;
 
     SDL_WM_SetCaption("NEW GAME", NULL);
-    initBackNGame(&NGame);
+
     /////////////////////
     // wided init////
 
@@ -77,15 +75,9 @@ void NewGame(SDL_Surface *screen, int *Mode)
         /////////////////////////////////////////
 
         // deplacerIA(&E, p.position_perso);
-        // AfficherNGame(NGame, screen);
 
-        SDL_Delay(10);
-        die = collisionBB(S, E);
         //////////////////////////////////////////
-        if (die == 1)
-        {
-            continuer = 0; // exemple
-        }
+
         SDL_PollEvent(&event);
         switch (event.type)
         {
@@ -181,7 +173,7 @@ void NewGame(SDL_Surface *screen, int *Mode)
 
         //////////////////////////////////////
         afficheBack(bm, screen);
-        collision(screen, &S);
+        // collision(screen, &S);
         animerBackground(&ba);
         afficheBack2(ba, screen);
         afficherminimap(m, screen);
@@ -196,8 +188,13 @@ void NewGame(SDL_Surface *screen, int *Mode)
         deplacerperso(&S, dt);
         Updateperso(&S, keys);
         dt = SDL_GetTicks() - t_prev;
-
         SDL_Flip(screen);
+        SDL_Delay(10);
+        die = collisionBB(S, E);
+        if (die == 1)
+        {
+            // continuer = 0; // exemple
+        }
     }
     /////////////////////////////////////
     for (i = 0; i < 20; i++)
@@ -206,7 +203,7 @@ void NewGame(SDL_Surface *screen, int *Mode)
     }
     SDL_FreeSurface(S.jeu.HUD_etoiles);
     SDL_FreeSurface(S.jeu.HUD_vie);
-    freeBackNGame(NGame);
+
     freeEnnemy(E);
     fclose(fichier);
 }

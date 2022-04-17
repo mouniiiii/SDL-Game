@@ -64,13 +64,14 @@ void initialisation_back(background *b)
 void afficheBack(background b, SDL_Surface *ecran)
 {
 	/* On blitte par-dessus l'écran */
-	Mix_PlayMusic(b.son, -1);
+	// Mix_PlayMusic(b.son, -1);
 	SDL_BlitSurface(b.imgback, &b.camera, ecran, &b.posback);
 }
 
 void afficheBack2(background b, SDL_Surface *ecran)
 {
 	/* On blitte par-dessus l'écran */
+
 	Mix_PlayMusic(b.son, -1); // Jouer infiniment la musique
 	SDL_BlitSurface(b.imgback, &b.camera2, ecran, &b.posback2);
 	displayFlower(b, ecran);

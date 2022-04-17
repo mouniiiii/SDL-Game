@@ -1,9 +1,17 @@
-
 #include "Resource Perso/personnage.h"
+#include <math.h>
 
 void initperso(personne *p)
 {
-    p->x = 50; // type de mesure
+    // INITIALISATIONS DES POSITIONS
+    p->TEXTE[0].position.x = 5;
+    p->TEXTE[0].position.y = 5;
+    p->TEXTE[1].position.x = 5;
+    p->TEXTE[1].position.y = 25;
+    p->TEXTE[2].position.x = 5;
+    p->TEXTE[2].position.y = 50;
+    //--------------------------------
+    p->x = 50;
     p->y = 350;
     p->etat = ETAT_SOL;
     p->vx = p->vy = 0;
@@ -14,32 +22,59 @@ void initperso(personne *p)
     p->vi = 0;
     p->position_vie.x = 50;
     p->position_vie.y = 50;
-    p->fig = 0;
-    char nomFich[50];
-    int i;
-    for (i = 0; i < 20; i++)
-    {
-        sprintf(nomFich, "Resource Perso/image/sprite%d.png", i);
-        p->sprite[i] = IMG_Load(nomFich);
-    }
-    p->jeu.HUD_vie = IMG_Load("Resource Perso/image/life.png");
-    p->jeu.HUD_etoiles = IMG_Load("Resource Perso/image/stars.png");
 
-    p->jeu.vies = 3;
-    p->jeu.etoiles = 0;
+    char Fichier[50];
+    int i;
+    for (i = 0; i < 17; i++)
+    {
+        sprintf(Fichier, "Resource Perso/image/sprite%d.png", i);
+        p->sprite[i] = IMG_Load(Fichier);
+    }
+    // p->jeu.HUD_vie = IMG_Load("image/life.png");
+    // p->jeu.HUD_etoiles = IMG_Load("image/stars.png");
+
+    p->vie = 3;
+    p->level = 1;
     p->score = 0;
 }
 
-void afficherperso(personne *p, SDL_Surface *ecran)
+void afficherperso(personne *p, SDL_Surface *screen)
 {
     // SDL_FillRect(ecran,NULL,SDL_MapRGB(ecran->format,0,0,0));
-    SDL_BlitSurface(p->sprite[p->num], NULL, ecran, &(p->position_perso));
+    SDL_BlitSurface(p->sprite[p->num], NULL, screen, &(p->position_perso));
     // SDL_BlitSurface(p->vie[0],NULL,ecran,&(p->position_vie));
-    drawHud(p, ecran);
+
+    char score[20], vie[20], level[20];
+
+    TTF_Font *police = NULL;
+    SDL_Color couleur = {50, 0, 150};
+    police = TTF_OpenFont("Resource Perso/GenBasB.ttf", 30);
+
+    sprintf(score, "SCORE:%d", p->score);
+    sprintf(vie, "VIE:%d", p->vie);
+    sprintf(level, "LEVEL:%d", p->level);
+
+    p->TEXTE[0].texte = TTF_RenderText_Blended(police, score, couleur);
+    p->TEXTE[1].texte = TTF_RenderText_Blended(police, vie, couleur);
+    p->TEXTE[2].texte = TTF_RenderText_Blended(police, level, couleur);
+
+    SDL_BlitSurface(p->TEXTE[0].texte, NULL, screen, &p->TEXTE[0].position);
+    SDL_BlitSurface(p->TEXTE[1].texte, NULL, screen, &p->TEXTE[1].position);
+    SDL_BlitSurface(p->TEXTE[2].texte, NULL, screen, &p->TEXTE[2].position);
+    TTF_CloseFont(police);
+
+    FILE *f;
+    f = fopen("Resource Perso/Score.txt", "w");
+
+    fprintf(f, " %d \n ", p->score);
+
+    fclose(f);
+    // drawHud(p,screen);
 }
 
 void Saute(personne *p, float impulsion)
 {
+
     p->vy = -impulsion;
     p->etat = ETAT_AIR;
 }
@@ -188,13 +223,113 @@ void drawHud(personne *p, SDL_Surface *screen)
     sprintf(text, "%d", p->jeu.etoiles);
     drawString(text, screen, 100, 57, font);
 
-    sprintf(text, "Score: %d", p->score);
-    drawString(text, screen, 300, 70, font);
+    /*sprintf(text, "Score: %d", p->score);
+   drawString(text,screen, 300,70, font);
 
     FILE *f;
-    f = fopen("Resource Perso/Score.txt", "w");
+       f=fopen("Score.txt","w");
 
-    fprintf(f, " %d \n ", p->score);
 
-    fclose(f);
+           fprintf(f," %d \n ",t.score);
+
+           fclose(f);
+SDL_FreeSurface(text)*/
 }
+
+/*
+void sauter(Personne *p,SDL_Surface *screen)
+{//ennemi e;
+#define SCREEN_W 1300
+#define SCREEN_H 550
+#define POS_X 500
+#define POS_Y 900
+
+
+double v_x, v_y, v_grav, v_jump, v_air;
+double b;
+if(p->done==1)
+{
+b=p->postion.y;
+}
+  p->postion.y=(-0.004*p->postion.x*p->postion.x)+1; ///lequation de la parabolle;
+    /* initialisation des vitesses
+    p->v_grav =0.08;//va représenter l'attraction terrestre.
+    p->v_jump =-4;//vitesse du saut
+
+    p->v_air = 1.5;//pas trop compris se que signifiait cette variable
+    p->v_x =p->v_air;//vitesse de déplacement dans les airs.
+    p->v_y =p->v_jump;
+
+
+p->postion.y=b;
+
+if(p->etat==0)
+{
+     p->v_x=p->v_air;
+        /* evolution de la position
+
+
+
+        p->postion.x +=p->v_x;
+        p->postion.y +=p->v_y;
+
+        /* evolution de la vitesse
+        p->v_y +=p->v_grav;//vitesse à la quel le personnage va latéralement monter
+
+        /* collisions
+        if (p->postion.y > POS_Y)//si le perso dépace une certaine hauteur alors on fait redescendre le perso
+            p->v_y =-p->v_jump;
+
+        if (p->postion.x < POS_X || p->postion.x > SCREEN_W - POS_X)
+            p->v_x = -p->v_x;
+
+
+        /* dessin*/
+/*SDL_FillRect(screen, 0, SDL_MapRGB(screen->format, 0, 0, 0));
+affBackground(p->B,screen);
+afficherEnnemi(p->e,screen);
+afficherPerso(p,screen);
+SDL_Flip(screen);
+
+
+if(p->postion.y==b)
+{
+p->sauter=0;
+}
+}
+else if(p->etat==1)
+{
+
+v_x=-v_air;
+/* evolution de la position
+
+
+
+p->postion.x += v_x;
+p->postion.y += v_y;
+
+/* evolution de la vitesse
+v_y += v_grav;//vitesse à la quel le personnage va latéralement monter
+
+/* collisions
+if (p->postion.y > POS_Y)//si le perso dépace une certaine hauteur alors on fait redescendre le perso
+    v_y =-v_jump;
+
+if (p->postion.x < POS_X || p->postion.x > SCREEN_W - POS_X)
+    v_x = -v_x;
+
+
+/* dessin*/
+/* SDL_FillRect(screen, 0, SDL_MapRGB(screen->format, 0, 0, 0));
+affBackground(p->B,screen);
+afficherEnnemi(p->e,screen);
+ afficherPerso(p,screen);
+ SDL_Flip(screen);
+
+
+if(p->postion.y==b)
+{
+p->sauter=0;
+}
+}
+}*/
