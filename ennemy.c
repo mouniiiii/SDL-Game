@@ -38,10 +38,10 @@ void initEnnemi(Ennemi *E)
 
     E->Spike = IMG_Load("Resource Entite/Spike.png");
     E->posSpike.x = 700;
-    E->posSpike.y = 560;
+    E->posSpike.y = 350;
 
     E->posEnemy.x = 400;
-    E->posEnemy.y = 560;
+    E->posEnemy.y = 350;
     E->distance = 200;
     E->position_initiale = 150;
     E->num = 0;

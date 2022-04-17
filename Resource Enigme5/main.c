@@ -7,9 +7,9 @@ int main()
 {
 
 	SDL_Surface *ecran;
-	SDL_Surface *porte[14];
+	// SDL_Surface *porte[14];
 
-	SDL_Rect port;
+	// SDL_Rect port;
 
 	SDL_Event event;
 	Enigme e;
@@ -37,11 +37,11 @@ int main()
 	if (Game)
 	{
 		printf("you win!!!");
-		animerEnigme(porte, &port, ecran);
+		// animerEnigme(porte, &port, ecran);
 	}
 	else if (!Game)
 	{
-		animerEnigmee(porte, &port, ecran);
+		// animerEnigmee(porte, &port, ecran);
 		printf("you lost!!! %d ", Game);
 	}
 

@@ -27,10 +27,12 @@ void NewGame(SDL_Surface *screen, int *Mode)
     SDL_Event event;
     /////////////////////
     Ennemi E;
+    Enigme e;
+    /////////////////////
 
     // Mounir's Updates:
-    enigme e;
-    e.num_enigme = -1;
+    enigme eSF;
+    eSF.num_enigme = -1;
     int s, r = 0, run = 1, running = 1, alea;
     char image[30] = "";
     int time = 0; //, r = 0;
@@ -51,7 +53,9 @@ void NewGame(SDL_Surface *screen, int *Mode)
     /////////////////////
     int die = 0;
     int continuer = 1;
-
+    int boucle = 1;
+    int random;
+    int Game;
     SDL_WM_SetCaption("NEW GAME", NULL);
 
     /////////////////////
@@ -65,6 +69,9 @@ void NewGame(SDL_Surface *screen, int *Mode)
     initperso(&S);
     initEnnemi(&E);
     init_map(&m);
+    Init_Enigme(&e, "Resource Enigme5/questions.txt", "Resource Enigme5/reponses.txt", "Resource Enigme5/vraireponses.txt");
+    init_enigme(&eSF, "Resource Enigme 6/enigme.txt");
+
     /////////////////////
 
     while (continuer)
@@ -156,10 +163,6 @@ void NewGame(SDL_Surface *screen, int *Mode)
         {
             S.acceleration = 0;
         }
-        if (keys[SDLK_f])
-        {
-            S.vi = 1;
-        }
         if (keys[SDLK_LEFT])
         {
             S.deplacement = 0;
@@ -173,7 +176,7 @@ void NewGame(SDL_Surface *screen, int *Mode)
 
         //////////////////////////////////////
         afficheBack(bm, screen);
-        // collision(screen, &S);
+        collision(screen, &S);
         animerBackground(&ba);
         afficheBack2(ba, screen);
         afficherminimap(m, screen);
@@ -190,10 +193,33 @@ void NewGame(SDL_Surface *screen, int *Mode)
         dt = SDL_GetTicks() - t_prev;
         SDL_Flip(screen);
         SDL_Delay(10);
+        // die = 0;
         die = collisionBB(S, E);
-        if (die == 1)
+        if (die)
         {
-            // continuer = 0; // exemple
+            while (boucle == 1)
+            {
+                random = rand() % 2;
+                switch (random)
+                {
+                case 0:
+                    boucle = Play_Enigme(&e, screen, &Game);
+                    if (Game)
+                    {
+                        printf("you win!!!");
+                    }
+                    else if (!Game)
+                    {
+                        printf("you lost!!! %d ", Game);
+                    }
+                    break;
+                case 1:
+                    afficherEnigme(eSF, screen);
+                    afficher_resultat(screen, eSF.reponsevrai, r, &eSF);
+                    boucle = 0;
+                    break;
+                }
+            }
         }
     }
     /////////////////////////////////////

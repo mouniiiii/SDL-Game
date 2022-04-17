@@ -1,5 +1,5 @@
-#ifndef HEADER
-#define HEADER
+#ifndef ENIGMESF
+#define ENIGMESF
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -33,4 +33,4 @@ int resolution(int *running, int *run);
 void afficher_resultat(SDL_Surface *screen, int s, int r, enigme *en);
 void animer(enigme *e);
 
-#endif /* HEADER */
+#endif /* ENIGMESF */
