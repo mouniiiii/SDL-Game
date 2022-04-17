@@ -28,20 +28,19 @@ void NewGame(SDL_Surface *screen, int *Mode)
     SDL_Event event;
     /////////////////////
     Ennemi E;
-    
-    //Mounir's Updates:
+
+    // Mounir's Updates:
     enigme e;
-    e.num_enigme=-1;
-    int s,r=0,run =1,running=1,alea;
-	char image[30]="";
-    int time=0,r=0;
-    ///////////////////////	
-	////wided decl/////
-	
-	SDL_Surface *screen=NULL,*screen2;
-	 background ba, bm;
-	Personne perso;
-	SDL_Event event;
+    e.num_enigme = -1;
+    int s, r = 0, run = 1, running = 1, alea;
+    char image[30] = "";
+    int time = 0, r = 0;
+    ///////////////////////
+    ////wided decl/////
+
+    background ba, bm;
+
+    SDL_Event event;
     ////////////////////
     personne S;
     Uint8 *keys;
@@ -58,44 +57,27 @@ void NewGame(SDL_Surface *screen, int *Mode)
     SDL_WM_SetCaption("NEW GAME", NULL);
     initBackNGame(&NGame);
     /////////////////////
-	//wided init////
-    SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER);
+    // wided init////
 
-	screen=SDL_SetVideoMode(1360,765,32,SDL_HWSURFACE|SDL_DOUBLEBUF);
-	if(screen==NULL)
-	{
-		printf("unable to set video mode:%s\n",SDL_GetError());
-		return 1;
-	}
-		
-	initialisation_back(&ba);//initback
-	initBackMasque(&bm);//pour la collision parfaite
-	
+    initialisation_back(&ba); // initback
+    initBackMasque(&bm);      // pour la collision parfaite
 
-	initialiserperso(&perso);
-	 //////////
+    // initialiserperso(&perso);
+    //////////
     initperso(&S);
     initEnnemi(&E);
     init_map(&m);
     /////////////////////
 
     while (continuer)
-    {    ////////wided///////////
-	   deplacer_perso(&perso,event);
-		afficheBack(bm,screen);
- 		collision(screen,&perso);
-		SDL_PollEvent(&event); 
+    {
+
         /////////////////////
         t_prev = SDL_GetTicks();
-        afficherperso(&S, screen);
         /////////////////////////////////////////
-        afficherEnnemi(E, screen);
-        afficherEnnemi2(E, screen);
-        animerEnnemi(&E);
-        deplacer(&E);
+
         // deplacerIA(&E, p.position_perso);
-        AfficherNGame(NGame, screen);
-        SDL_Flip(screen);
+        // AfficherNGame(NGame, screen);
 
         SDL_Delay(10);
         die = collisionBB(S, E);
@@ -107,7 +89,7 @@ void NewGame(SDL_Surface *screen, int *Mode)
         SDL_PollEvent(&event);
         switch (event.type)
         {
-			
+
         case SDL_QUIT:
             continuer = 0;
             SaveScreenMode(screen, Mode);
@@ -115,52 +97,49 @@ void NewGame(SDL_Surface *screen, int *Mode)
         case SDL_KEYDOWN:
             switch (event.key.keysym.sym)
             {
-            			    
+
             case SDLK_ESCAPE:
                 continuer = 0;
                 SaveScreenMode(screen, Mode);
                 break;
-		case SDLK_RIGHT:
-			 
-			if ( collisionparfaite(screen,perso)==10){
-				scrolling(&ba,0);	//scrollingymin;	
-				scrolling(&bm,0);
-			}
-					
-                        break;
-                        case SDLK_LEFT:
-                    
-                       if ( collisionparfaite(screen,perso)==10){
-				scrolling(&ba,1);//scrolllingysar;
-				scrolling(&bm,1);
-			}			
-		 
-                        break;
-			 case SDLK_UP:
-			 
-		  		if ( collisionparfaite(screen,perso)==10){
-					scrolling(&ba,2);	//scrollingymin;	
-					scrolling(&bm,2);
-				}			 
-                        break;
- 			 case SDLK_DOWN:
- 			 
- 		  		if ( collisionparfaite(screen,perso)==10){
-					scrolling(&ba,3);	//scrollingymin;	
-					scrolling(&bm,3);
-				}			 
-                        break;	
-      		 	    
+            case SDLK_RIGHT:
+
+                if (collisionparfaite(screen, S) == 10)
+                {
+                    scrolling(&ba, 0); // scrollingymin;
+                    scrolling(&bm, 0);
+                }
+
+                break;
+            case SDLK_LEFT:
+
+                if (collisionparfaite(screen, S) == 10)
+                {
+                    scrolling(&ba, 1); // scrolllingysar;
+                    scrolling(&bm, 1);
+                }
+
+                break;
+            case SDLK_UP:
+
+                if (collisionparfaite(screen, S) == 10)
+                {
+                    scrolling(&ba, 2); // scrollingymin;
+                    scrolling(&bm, 2);
+                }
+                break;
+            case SDLK_DOWN:
+
+                if (collisionparfaite(screen, S) == 10)
+                {
+                    scrolling(&ba, 3); // scrollingymin;
+                    scrolling(&bm, 3);
+                }
+                break;
             }
             break;
         }
-	    ///////wided//////////
-	    animerBackground(&ba);	
-			afficheBack2(ba,screen);
-	
-			afficher_perso(screen,perso);	
-			SDL_Flip(screen);
-			SDL_Delay(100);
+
         //////////////////////////////////////
         keys = SDL_GetKeyState(NULL);
         if (keys[SDLK_RIGHT] == 0 && keys[SDLK_LEFT] == 0 && keys[SDLK_j] == 0 && keys[SDLK_UP] == 0 && keys[SDLK_w] == 0)
@@ -199,19 +178,32 @@ void NewGame(SDL_Surface *screen, int *Mode)
             Saute(&S, impulsion);
             S.direction = 3;
         }
+
+        //////////////////////////////////////
+        afficheBack(bm, screen);
+        collision(screen, &S);
+        animerBackground(&ba);
+        afficheBack2(ba, screen);
+        afficherminimap(m, screen);
+        affichertemp(&temps, screen, police);
+        MAJMinimap(S.position_perso, &m, camera, 20);
+        afficherperso(&S, screen);
+        afficherEnnemi(E, screen);
+        afficherEnnemi2(E, screen);
+        animerEnnemi(&E);
+        deplacer(&E);
         animerperso(&S);
         deplacerperso(&S, dt);
         Updateperso(&S, keys);
         dt = SDL_GetTicks() - t_prev;
-        //////////////////////////////////////
+
+        SDL_Flip(screen);
     }
+    /////////////////////////////////////
     for (i = 0; i < 20; i++)
     {
         SDL_FreeSurface(S.sprite[i]);
     }
-    afficherminimap(m, screen);
-    affichertemp(&temps, screen, police);
-    MAJMinimap(S.position_perso, &m, camera, 20);
     SDL_FreeSurface(S.jeu.HUD_etoiles);
     SDL_FreeSurface(S.jeu.HUD_vie);
     freeBackNGame(NGame);

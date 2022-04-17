@@ -1,5 +1,5 @@
-#ifndef PERS_H_INCLUDED
-#define PERS_H_INCLUDED
+#ifndef PRES
+#define PRES
 #include <stdlib.h>
 #include <stdio.h>
 #include <SDL/SDL.h>
@@ -9,24 +9,15 @@
 #include <math.h>
 #include <stdbool.h>
 
-
-
 typedef struct
 {
-  	SDL_Surface *image_p;
-  	SDL_Rect pos_perso;
-}Personne;
+	SDL_Surface *image_p;
+	SDL_Rect pos_perso;
+} Personne;
 
 void initialiserperso(Personne *perso);
-void deplacer_perso(Personne *perso,SDL_Event event);
-void afficher_perso(SDL_Surface *screen,Personne perso);
+void deplacer_perso(Personne *perso, SDL_Event event);
+void afficher_perso(SDL_Surface *screen, Personne perso);
 void free_perso(Personne perso);
 
-
-
-
-
-
-
-
-#endif
+#endif /* PRES */
