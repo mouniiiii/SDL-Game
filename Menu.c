@@ -207,10 +207,12 @@ void NewGame(SDL_Surface *screen, int *Mode)
                     if (Game)
                     {
                         printf("you win!!!");
+                        //////////////////// IF CORRECT DONT LOSE LIFE
                     }
                     else if (!Game)
                     {
                         printf("you lost!!! %d ", Game);
+                        //////////////////// IF INCORRECT LOSE LIFE
                     }
                     break;
                 case 1:
