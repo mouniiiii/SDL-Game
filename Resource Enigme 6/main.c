@@ -16,8 +16,6 @@ int main()
 	 SDL_Event event;
 	 
 	 SDL_Init ( SDL_INIT_EVERYTHING) ;
-     SDL_WM_SetIcon(IMG_Load("icon.jpg"), NULL);
-     SDL_WM_SetCaption("******ENIGME******", NULL);
 
 	 screen=SDL_SetVideoMode(1280,720,32 ,SDL_HWSURFACE  |  SDL_DOUBLEBUF  );
 
