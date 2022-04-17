@@ -231,7 +231,11 @@ void NewGame(SDL_Surface *screen, int *Mode)
     }
     SDL_FreeSurface(S.jeu.HUD_etoiles);
     SDL_FreeSurface(S.jeu.HUD_vie);
-
+    SDL_FreeSurface(m.map);
+    SDL_FreeSurface(ba.imgback);
+    SDL_FreeSurface(bm.imgback);
+    SDL_FreeSurface(ba.image_flower);
+    SDL_FreeSurface(bm.image_flower);
     freeEnnemy(E);
     fclose(fichier);
 }
