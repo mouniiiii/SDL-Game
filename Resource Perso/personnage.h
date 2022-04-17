@@ -5,8 +5,6 @@
 #include <SDL/SDL_image.h>
 #include <SDL/SDL_ttf.h>
 #include <SDL/SDL_mixer.h>
-
-
 #define DROITE 1
 #define GAUCHE 0
 
@@ -15,10 +13,9 @@
 struct texte
 {
 SDL_Surface *texte;
+
 SDL_Rect position;
-char score[20];
-char vie[20];
-char temps[20];
+
 };
 typedef struct texte texte; //STRUCTURE PERMETTANT DE GERER LES TEXTES QUI DOIVENT ETRE AFFCIHÉS COMME "SCORE,VIE,OU TEMPS.....);
 
@@ -27,7 +24,7 @@ typedef struct Gestion
 
     SDL_Surface *screen;
     //HUD
-    SDL_Surface *HUD_vie, *HUD_etoiles;
+   SDL_Surface *HUD_vie, *HUD_etoiles;
     int vies, etoiles;
 } Gestion;
 typedef struct
@@ -35,16 +32,18 @@ typedef struct
     Gestion jeu;
     texte TEXTE[3];
     float dx;
-    int num,vi;
+    int num,etatHub;
     float x,y;
     float vx,vy;
     SDL_Rect position_perso,position_vie;
-    SDL_Surface *sprite[20];
+    SDL_Surface *sprite[20],*Vie[5];
+    
+    int fig;
     int etat;
     float acceleration,vitesse;
     int deplacement;
     int direction;
-    int score,vie,level;
+    int score,level;
 } personne;
 
 //LES FONCTIONS DEVELOPPEES
