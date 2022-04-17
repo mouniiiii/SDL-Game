@@ -107,6 +107,7 @@ void NewGame(SDL_Surface *screen, int *Mode)
                 {
                     scrolling(&ba, 0); // scrollingymin;
                     scrolling(&bm, 0);
+                    // E.posEnemy.x--;
                 }
 
                 break;
@@ -193,9 +194,8 @@ void NewGame(SDL_Surface *screen, int *Mode)
         dt = SDL_GetTicks() - t_prev;
         SDL_Flip(screen);
         SDL_Delay(10);
-        // die = 0;
         die = collisionBB(S, E);
-        if (die)
+        if (die == 1)
         {
             while (boucle == 1)
             {
@@ -204,22 +204,23 @@ void NewGame(SDL_Surface *screen, int *Mode)
                 {
                 case 0:
                     boucle = Play_Enigme(&e, screen, &Game);
-                    if (Game)
-                    {
-                        printf("you win!!!");
-                        //////////////////// IF CORRECT DONT LOSE LIFE
-                    }
-                    else if (!Game)
-                    {
-                        printf("you lost!!! %d ", Game);
-                        //////////////////// IF INCORRECT LOSE LIFE
-                    }
+
                     break;
                 case 1:
                     afficherEnigme(eSF, screen);
                     afficher_resultat(screen, eSF.reponsevrai, r, &eSF);
                     boucle = 0;
                     break;
+                }
+                if (Game)
+                {
+                    printf("you win!!!");
+                    //////////////////// IF CORRECT DONT LOSE LIFE
+                }
+                else if (!Game)
+                {
+                    printf("you lost!!! %d ", Game);
+                    //////////////////// IF INCORRECT LOSE LIFE
                 }
             }
         }
@@ -231,11 +232,28 @@ void NewGame(SDL_Surface *screen, int *Mode)
     }
     SDL_FreeSurface(S.jeu.HUD_etoiles);
     SDL_FreeSurface(S.jeu.HUD_vie);
+    /////////////////////////////////////
     SDL_FreeSurface(m.map);
+    /////////////////////////////////////
     SDL_FreeSurface(ba.imgback);
     SDL_FreeSurface(bm.imgback);
     SDL_FreeSurface(ba.image_flower);
     SDL_FreeSurface(bm.image_flower);
+    /////////////////////////////////////
+    SDL_FreeSurface(eSF.img);
+    SDL_FreeSurface(eSF.anim.spritesheet);
+    /////////////////////////////////////
+    for (i = 0; i < 5; i++)
+    {
+        SDL_FreeSurface(e.boutons[i]);
+        SDL_FreeSurface(e.reponses[i]);
+    }
+    SDL_FreeSurface(e.background[0]);
+    SDL_FreeSurface(e.background[1]);
+    SDL_FreeSurface(e.lost);
+    SDL_FreeSurface(e.win);
+    SDL_FreeSurface(e.question);
+    /////////////////////////////////////
     freeEnnemy(E);
     fclose(fichier);
 }

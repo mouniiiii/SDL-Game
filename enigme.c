@@ -1,4 +1,5 @@
 #include "Resource Enigme5/enigme.h"
+#include <time.h>
 void Init_Enigme(Enigme *e, char *f1, char *f2, char *f3)
 {
 	e->background[0] = IMG_Load("Resource Enigme5/fond2.jpg");
@@ -254,10 +255,7 @@ int Play_Enigme(Enigme *e, SDL_Surface *ecran, int *Game)
 				}
 				break;
 			}
-			case SDL_MOUSEMOTION:
-			{
-				printf("Souris en position %d %d\n", event.motion.x, event.motion.y);
-			}
+
 			case SDL_MOUSEBUTTONUP:
 			{
 
@@ -306,5 +304,4 @@ int Play_Enigme(Enigme *e, SDL_Surface *ecran, int *Game)
 			}
 		}
 	}
-	printf("sortie");
 }
