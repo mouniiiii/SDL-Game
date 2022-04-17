@@ -28,6 +28,14 @@ void NewGame(SDL_Surface *screen, int *Mode)
     SDL_Event event;
     /////////////////////
     Ennemi E;
+    
+    //Mounir's Updates:
+    enigme e;
+    e.num_enigme=-1;
+    int s,r=0,run =1,running=1,alea;
+	char image[30]="";
+    int time=0,r=0;
+    ////////////////////
     background ba, bm;
     personne S;
     Uint8 *keys;
