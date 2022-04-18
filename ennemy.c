@@ -37,7 +37,7 @@ void initEnnemi(Ennemi *E)
     }
 
     E->Spike = IMG_Load("Resource Entite/Spike.png");
-    E->posSpike.x = 700;
+    E->posSpike.x = 1000;
     E->posSpike.y = 350;
 
     E->posEnemy.x = 400;
@@ -104,6 +104,7 @@ int collisionBB(personne p, Ennemi E)
     {
         return 0;
     }
+
     if ((p.position_perso.x + p.sprite[p.num]->w > E.posSpike.x) && (p.position_perso.x < E.posSpike.x))
     {
         return 1;

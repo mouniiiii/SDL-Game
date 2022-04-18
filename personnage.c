@@ -20,10 +20,10 @@ void initperso(personne *p)
   p->position_vie.x = 5;
   p->position_vie.y = 8;
   // INITIALISATIONS DES POSITIONS DU SCORE ET LE NIVEAU
-  p->TEXTE[0].position.x = 850;
+  p->TEXTE[0].position.x = 470;
   p->TEXTE[0].position.y = 5;
-  p->TEXTE[1].position.x = 850;
-  p->TEXTE[1].position.y = 30;
+  p->TEXTE[1].position.x = 470;
+  p->TEXTE[1].position.y = 29;
 
   p->etatHub = 3; // CE QUI EQUIVAUT A UNE VIE DE NIVEAU 3 AU DEMARRAGE
   p->score = 0;
@@ -49,7 +49,7 @@ void afficherperso(personne *p, SDL_Surface *screen)
   char score[20], level[20];
 
   TTF_Font *police = NULL;
-  SDL_Color couleur = {250, 250, 250};
+  SDL_Color couleur = {50, 0, 150};
   police = TTF_OpenFont("Resource Perso/GenBasB.ttf", 30);
 
   sprintf(score, "SCORE:%d", p->score);
@@ -80,7 +80,7 @@ void deplacerperso(personne *p, Uint32 dt)
 {
   p->dx = (0.5 * p->acceleration) * dt * dt + (p->vitesse) * dt; // CALCUL DE LA DISTANCE ENGENDRE
 
-  if (p->deplacement == 1 && p->x < 1300)
+  if (p->deplacement == 1 && p->x < 1200)
   {
     p->x += (p->dx);
     (p->score) += -0.000001 * ((dt) / (p->dx) - 0.000001) + 2;
@@ -156,6 +156,19 @@ void Updateperso(personne *p, Uint8 *keys)
   p->x += p->vx;
   p->y += p->vy;
 
+  if (p->deplacement == 1 && p->position_perso.x > 1100 && p->position_perso.x < 1200) // SI LE HERO DEPASSE LE MILIEU DU SCREEN ON LUI RENVOIE
+  {                                                                                    // A SA POSITION INITIALE
+    p->x = 60;
+  }
+  if (p->position_perso.x > 1000) // position de l'ennemi
+  {
+    (p->etatHub)--; // LE SANTE DE NOTRE HERO SE DEGRADE AU FUR A MESURE QU'ON DECREMENT
+    p->x = 60;
+    if (p->etatHub == 0)
+    {
+      exit(1); // RETOUR AU MENU DU JEU
+    }
+  }
   p->position_perso.x = p->x;
   p->position_perso.y = p->y;
 }

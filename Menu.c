@@ -33,7 +33,7 @@ void NewGame(SDL_Surface *screen, int *Mode)
     // Mounir's Updates:
     enigme eSF;
     eSF.num_enigme = -1;
-    int s, r = 0, run = 1, running = 1, alea;
+    int s, r = 0, run = 1, alea;
     char image[30] = "";
     int time = 0; //, r = 0;
     ///////////////////////
@@ -107,7 +107,8 @@ void NewGame(SDL_Surface *screen, int *Mode)
                 {
                     scrolling(&ba, 0); // scrollingymin;
                     scrolling(&bm, 0);
-                    // E.posEnemy.x--;
+                    E.posSpike.x--;
+                    E.posEnemy.x++;
                 }
 
                 break;
@@ -117,6 +118,8 @@ void NewGame(SDL_Surface *screen, int *Mode)
                 {
                     scrolling(&ba, 1); // scrolllingysar;
                     scrolling(&bm, 1);
+                    E.posSpike.x++;
+                    E.posEnemy.x--;
                 }
 
                 break;
@@ -126,6 +129,8 @@ void NewGame(SDL_Surface *screen, int *Mode)
                 {
                     scrolling(&ba, 2); // scrollingymin;
                     scrolling(&bm, 2);
+                    E.posSpike.y--;
+                    E.posEnemy.y--;
                 }
                 break;
             case SDLK_DOWN:
@@ -134,6 +139,8 @@ void NewGame(SDL_Surface *screen, int *Mode)
                 {
                     scrolling(&ba, 3); // scrollingymin;
                     scrolling(&bm, 3);
+                    E.posSpike.y++;
+                    E.posEnemy.y++;
                 }
                 break;
             }
@@ -183,8 +190,8 @@ void NewGame(SDL_Surface *screen, int *Mode)
         afficherminimap(m, screen);
         affichertemp(&temps, screen, police);
         MAJMinimap(S.position_perso, &m, camera, 20);
-        afficherperso(&S, screen);
         afficherEnnemi(E, screen);
+        afficherperso(&S, screen);
         afficherEnnemi2(E, screen);
         animerEnnemi(&E);
         deplacer(&E);
@@ -192,7 +199,8 @@ void NewGame(SDL_Surface *screen, int *Mode)
         deplacerperso(&S, dt);
         Updateperso(&S, keys);
         dt = SDL_GetTicks() - t_prev;
-        SDL_Flip(screen);
+
+        // SDL_Flip(screen);
         SDL_Delay(10);
         die = collisionBB(S, E);
         if (die == 1)
@@ -200,30 +208,71 @@ void NewGame(SDL_Surface *screen, int *Mode)
             while (boucle == 1)
             {
                 random = rand() % 2;
+                SDL_Flip(screen);
                 switch (random)
                 {
                 case 0:
-                    boucle = Play_Enigme(&e, screen, &Game);
+                    // boucle = Play_Enigme(&e, screen, &Game);
 
-                    break;
-                case 1:
-                    afficherEnigme(eSF, screen);
+                    do
+                    {
+                        afficherEnigme(eSF, screen);
+                        /*time = (SDL_GetTicks() - t_prev) / 1000;
+                        SDL_BlitSurface(eSF.anim.spritesheet, &eSF.anim.clips[eSF.anim.cliploaded], screen, &eSF.anim.pos);
+                        SDL_Flip(screen);
+                        switch (time)
+                        {
+                        case 5:
+                            animer(&eSF);
+                            break;
+
+                        case 10:
+                            animer(&eSF);
+                            break;
+
+                        case 15:
+                            animer(&eSF);
+                            break;
+
+                        case 20:
+                            animer(&eSF);
+                            break;
+
+                        case 25:
+                            animer(&eSF);
+                            break;
+
+                        case 30:
+                            animer(&eSF);
+                            break;
+                        }*/
+                        r = resolution(&continuer, &run);
+
+                    } while (time <= 30 && (r > 3 || r < 1) && continuer != 0);
+
                     afficher_resultat(screen, eSF.reponsevrai, r, &eSF);
+                    SDL_Flip(screen);
+                    SDL_Delay(500);
                     boucle = 0;
                     break;
+                case 1:
+
+                    break;
                 }
-                if (Game)
-                {
-                    printf("you win!!!");
-                    //////////////////// IF CORRECT DONT LOSE LIFE
-                }
-                else if (!Game)
-                {
-                    printf("you lost!!! %d ", Game);
-                    //////////////////// IF INCORRECT LOSE LIFE
-                }
+                /*
+                                if (Game)
+                                {
+                                    printf("you win!!!");
+                                    //////////////////// IF CORRECT DONT LOSE LIFE
+                                }
+                                else if (!Game)
+                                {
+                                    printf("you lost!!! %d ", Game);
+                                    //////////////////// IF INCORRECT LOSE LIFE
+                                }*/
             }
         }
+        SDL_Flip(screen);
     }
     /////////////////////////////////////
     for (i = 0; i < 20; i++)
@@ -240,7 +289,9 @@ void NewGame(SDL_Surface *screen, int *Mode)
     SDL_FreeSurface(ba.image_flower);
     SDL_FreeSurface(bm.image_flower);
     /////////////////////////////////////
-    SDL_FreeSurface(eSF.img);
+    SDL_FreeSurface(eSF.img[0]);
+    SDL_FreeSurface(eSF.img[1]);
+    SDL_FreeSurface(eSF.img[2]);
     SDL_FreeSurface(eSF.anim.spritesheet);
     /////////////////////////////////////
     for (i = 0; i < 5; i++)

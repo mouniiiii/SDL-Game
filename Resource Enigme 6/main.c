@@ -73,10 +73,10 @@ int main()
             r = resolution(&running, &run);
 
         } while (time <= 30 && (r > 3 || r < 1) && running != 0);
+        afficher_resultat(screen, e.reponsevrai, r, &e);
 
         while (running)
         {
-            afficher_resultat(screen, e.reponsevrai, r, &e);
 
             SDL_WaitEvent(&event);
             switch (event.type)

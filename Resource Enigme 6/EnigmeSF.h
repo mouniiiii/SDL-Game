@@ -18,7 +18,7 @@ typedef struct
 
 typedef struct
 {
-    SDL_Surface *img;
+    SDL_Surface *img[3];
     SDL_Rect p;
     int reponsevrai;
     int reponsejoueur;

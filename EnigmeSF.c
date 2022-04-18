@@ -27,7 +27,7 @@ void init_enigme(enigme *e, char *nomfichier)
 
 	e->p.x = 0;
 	e->p.y = 0;
-	e->img = NULL;
+	e->img[0] = NULL;
 
 	generate_afficher(&e->num_enigme);
 	char nomimage[20];
@@ -40,7 +40,7 @@ void init_enigme(enigme *e, char *nomfichier)
 			i++;
 		}
 
-		e->img = IMG_Load(nomimage);
+		e->img[0] = IMG_Load(nomimage);
 		fclose(f);
 	}
 	else
@@ -62,8 +62,7 @@ void generate_afficher(int *alea)
 /////////////////////////////////////////////
 void afficherEnigme(enigme e, SDL_Surface *screen)
 {
-	SDL_BlitSurface(e.img, NULL, screen, &e.p);
-	SDL_Flip(screen);
+	SDL_BlitSurface(e.img[0], NULL, screen, &e.p);
 }
 
 ////////////////////////////////
@@ -103,15 +102,13 @@ void afficher_resultat(SDL_Surface *screen, int s, int r, enigme *en)
 
 	if (r == s)
 	{
-		en->img = IMG_Load("Resource Enigme 6/win.png");
-		SDL_BlitSurface(en->img, NULL, screen, &(en->p));
-		SDL_Flip(screen);
+		en->img[1] = IMG_Load("Resource Enigme 6/win.png");
+		SDL_BlitSurface(en->img[1], NULL, screen, &(en->p));
 	}
 	else
 	{
-		en->img = IMG_Load("Resource Enigme 6/lose.png");
-		SDL_BlitSurface(en->img, NULL, screen, &(en->p));
-		SDL_Flip(screen);
+		en->img[2] = IMG_Load("Resource Enigme 6/lose.png");
+		SDL_BlitSurface(en->img[2], NULL, screen, &(en->p));
 	}
 }
 

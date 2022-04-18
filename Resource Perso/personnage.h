@@ -5,18 +5,30 @@
 #include <SDL/SDL_image.h>
 #include <SDL/SDL_ttf.h>
 #include <SDL/SDL_mixer.h>
+#define DROITE 1
+#define GAUCHE 0
 
 #define ETAT_SOL 0
 #define ETAT_AIR 1
 struct texte
 {
     SDL_Surface *texte;
+
     SDL_Rect position;
 };
 typedef struct texte texte; // STRUCTURE PERMETTANT DE GERER LES TEXTES QUI DOIVENT ETRE AFFCIHÉS COMME "SCORE,VIE,OU TEMPS.....);
 
+typedef struct Gestion
+{
+
+    SDL_Surface *screen;
+    // HUD
+    SDL_Surface *HUD_vie, *HUD_etoiles;
+    int vies, etoiles;
+} Gestion;
 typedef struct
 {
+    Gestion jeu;
     texte TEXTE[3];
     float dx;
     int num, etatHub;
