@@ -5,7 +5,7 @@
 #include <SDL/SDL_image.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "/home/ghaith/Game/Resource Perso/personnage.h"
+#include "../Resource Perso/personnage.h"
 ////////////////////////
 ////////////////////////
 typedef struct

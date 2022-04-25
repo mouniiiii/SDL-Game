@@ -11,6 +11,7 @@
 /////////////////////////////////////
 void init_enigme(enigme *e, char *nomfichier)
 {
+	printf("init");
 	e->anim.pos.x = 6;
 	e->anim.pos.y = 6;
 	e->anim.spritesheet = IMG_Load("Resource Enigme 6/spritesheet.png");
@@ -29,8 +30,10 @@ void init_enigme(enigme *e, char *nomfichier)
 	e->p.y = 0;
 	e->img[0] = NULL;
 
+	printf("generating");
 	generate_afficher(&e->num_enigme);
 	char nomimage[20];
+	char image_rep[40];
 	FILE *f = fopen("Resource Enigme 6/enigme.txt", "r");
 	if (f != NULL)
 	{
@@ -39,9 +42,10 @@ void init_enigme(enigme *e, char *nomfichier)
 		{
 			i++;
 		}
-
-		e->img[0] = IMG_Load(nomimage);
+		sprintf(image_rep,"Resource Enigme 6/%s",nomimage);
+		e->img[0] = IMG_Load(image_rep);
 		fclose(f);
+		printf("image loaded %s",nomimage);
 	}
 	else
 		printf("erreur");

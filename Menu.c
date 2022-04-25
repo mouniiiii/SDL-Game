@@ -208,16 +208,16 @@ void NewGame(SDL_Surface *screen, int *Mode)
             while (boucle == 1)
             {
                 random = rand() % 2;
+                random=0;
                 SDL_Flip(screen);
                 switch (random)
                 {
                 case 0:
                     // boucle = Play_Enigme(&e, screen, &Game);
-
                     do
                     {
                         afficherEnigme(eSF, screen);
-                        /*time = (SDL_GetTicks() - t_prev) / 1000;
+                        time = (SDL_GetTicks() - t_prev) / 1000;
                         SDL_BlitSurface(eSF.anim.spritesheet, &eSF.anim.clips[eSF.anim.cliploaded], screen, &eSF.anim.pos);
                         SDL_Flip(screen);
                         switch (time)
@@ -245,14 +245,14 @@ void NewGame(SDL_Surface *screen, int *Mode)
                         case 30:
                             animer(&eSF);
                             break;
-                        }*/
+                        }
                         r = resolution(&continuer, &run);
 
                     } while (time <= 30 && (r > 3 || r < 1) && continuer != 0);
 
                     afficher_resultat(screen, eSF.reponsevrai, r, &eSF);
                     SDL_Flip(screen);
-                    SDL_Delay(500);
+                    
                     boucle = 0;
                     break;
                 case 1:
@@ -290,8 +290,7 @@ void NewGame(SDL_Surface *screen, int *Mode)
     SDL_FreeSurface(bm.image_flower);
     /////////////////////////////////////
     SDL_FreeSurface(eSF.img[0]);
-    SDL_FreeSurface(eSF.img[1]);
-    SDL_FreeSurface(eSF.img[2]);
+   
     SDL_FreeSurface(eSF.anim.spritesheet);
     /////////////////////////////////////
     for (i = 0; i < 5; i++)

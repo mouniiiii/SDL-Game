@@ -6,7 +6,7 @@
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
 #include <SDL/SDL_ttf.h>
-#include "/home/ghaith/Game/Resource Perso/personnage.h"
+#include "../Resource Perso/personnage.h"
 
 SDL_Color getpixel(SDL_Surface *psurface, int x, int y);
 int collisionparfaite(SDL_Surface *psurface, personne S);
