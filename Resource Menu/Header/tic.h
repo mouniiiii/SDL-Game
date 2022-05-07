@@ -15,9 +15,9 @@ SDL_Color couleur;
 SDL_Rect postxt;
 }tic;
 //
-void initialisation(tic *t);
+void initialisertic(tic *t);
 
-void affichage(tic t,SDL_Surface *ecran ) ;
+void affichertic(tic t,SDL_Surface *ecran ) ;
 
 int atilganer(int tabsuivi[]);
 
@@ -27,6 +27,6 @@ void calcul_coup(int tabsuivi[]);
 
 void Resultat (tic t,SDL_Surface* ecran);
 
-void liberationmemoire(tic t);
+void liberertic(tic t);
 
 #endif // ENTETE_H_INCLUDED
