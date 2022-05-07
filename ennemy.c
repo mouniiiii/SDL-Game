@@ -42,8 +42,8 @@ void initEnnemi(Ennemi *E)
 
     E->posEnemy.x = 400;
     E->posEnemy.y = 350;
-    E->distance = 200;
-    E->position_initiale = 150;
+    E->distance = 100;
+    E->position_initiale = 100;
     E->num = 0;
     E->direction1 = 1;
 }

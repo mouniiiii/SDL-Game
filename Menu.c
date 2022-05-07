@@ -87,40 +87,44 @@ void NewGame(SDL_Surface *screen, int *Mode)
     while (continuer)
     {
         // mahmoud tache blanche
-        /*while(cnt)
-       {
-          affichage(t,screen);
-          SDL_Flip(screen);
-          if( t.tour<9 &&atilganer(t.tabsuivi)==0)
-          {
-           if((t.tour+joueur)%2==0)//tour du PC
-              {calcul_coup(t.tabsuivi);
-              t.tour++;}
-          else
-          {
-          SDL_WaitEvent(&event);
-          switch(event.type)
-          {
-          case SDL_QUIT:
-              continuer=0;
-              break;
-          case SDL_MOUSEBUTTONUP:
-              x=event.button.x/190;
-              o=event.button.y/190;
-              coup=3*o+x;
-              t.tour++;
-              break;
-          }
+        /*
+        while (cnt)
+        {
+            affichage(t, screen);
+            SDL_Flip(screen);
+            if (t.tour < 9 && atilganer(t.tabsuivi) == 0)
+            {
+                if ((t.tour + joueur) % 2 == 0) // tour du PC
+                {
+                    calcul_coup(t.tabsuivi);
+                    t.tour++;
+                }
+                else
+                {
+                    SDL_WaitEvent(&event);
+                    switch (event.type)
+                    {
+                    case SDL_QUIT:
+                        continuer = 0;
+                        break;
+                    case SDL_MOUSEBUTTONUP:
+                        x = event.button.x / 190;
+                        o = event.button.y / 190;
+                        coup = 3 * o + x;
+                        t.tour++;
+                        break;
+                    }
 
-          t.tabsuivi[coup]=-1;
-          }
-          }
-          else
-          {
-          Resultat(t,screen);
-         // cnt=0;
-          }
-       //}
+                    t.tabsuivi[coup] = -1;
+                }
+            }
+            else
+            {
+                Resultat(t, screen);
+                // cnt = 0;
+                //liberationmemoire(t);
+            }
+        }
         */
 
         // SDL_FreeSurface(ecran);
@@ -177,8 +181,8 @@ void NewGame(SDL_Surface *screen, int *Mode)
                 {
                     scrolling(&ba, 2); // scrollingymin;
                     scrolling(&bm, 2);
-                    E.posSpike.y--;
-                    E.posEnemy.y--;
+                    // E.posSpike.y--;
+                    // E.posEnemy.y--;
                 }
                 break;
             case SDLK_DOWN:
@@ -187,8 +191,8 @@ void NewGame(SDL_Surface *screen, int *Mode)
                 {
                     scrolling(&ba, 3); // scrollingymin;
                     scrolling(&bm, 3);
-                    E.posSpike.y++;
-                    E.posEnemy.y++;
+                    // E.posSpike.y++;
+                    // E.posEnemy.y++;
                 }
                 break;
             }
