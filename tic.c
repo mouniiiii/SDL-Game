@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "Resource Menu/Header/tic.h"
 
-void initialisation(tic * t)
+void initialisertic(tic * t)
 {
     int i;
     for(i=0;i<9;i++)
@@ -21,7 +21,7 @@ void initialisation(tic * t)
     t->postxt.y=0;
 }
 
-void affichage(tic t,SDL_Surface *ecran ) 
+void affichertic(tic t,SDL_Surface *ecran ) 
 {
     int i;
     SDL_BlitSurface(t.boxes,NULL,ecran,NULL);
@@ -51,7 +51,7 @@ char msg[20];
     
     pos.x=0;
     pos.y=0;
-    affichage(t,ecran);
+    affichertic(t,ecran);
     switch(atilganer(t.tabsuivi))
     {
         case 0:
@@ -70,7 +70,7 @@ char msg[20];
     
 }
 
-void liberationmemoire(tic t)
+void liberertic(tic t)
 {
     SDL_FreeSurface(t.boxes);
     SDL_FreeSurface(t.xs);
