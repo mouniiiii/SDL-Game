@@ -74,60 +74,18 @@ void NewGame(SDL_Surface *screen, int *Mode)
     initperso(&S);
     initEnnemi(&E);
     init_map(&m);
-    initialisation(&t);
+    initialisertic(&t);
     Init_Enigme(&e, "Resource Enigme5/questions.txt", "Resource Enigme5/reponses.txt", "Resource Enigme5/vraireponses.txt");
     init_enigme(&eSF, "Resource Enigme 6/enigme.txt");
 
     /////////////////////
-    // mahmoud updates
-    // SDL_Surface * ecran;
-    // ecran=SDL_SetVideoMode(552,541,32,SDL_HWSURFACE|SDL_DOUBLEBUF);
+   
     int cnt = 1;
 
     while (continuer)
     {
-        // mahmoud tache blanche
-        /*
-        while (cnt)
-        {
-            affichage(t, screen);
-            SDL_Flip(screen);
-            if (t.tour < 9 && atilganer(t.tabsuivi) == 0)
-            {
-                if ((t.tour + joueur) % 2 == 0) // tour du PC
-                {
-                    calcul_coup(t.tabsuivi);
-                    t.tour++;
-                }
-                else
-                {
-                    SDL_WaitEvent(&event);
-                    switch (event.type)
-                    {
-                    case SDL_QUIT:
-                        continuer = 0;
-                        break;
-                    case SDL_MOUSEBUTTONUP:
-                        x = event.button.x / 190;
-                        o = event.button.y / 190;
-                        coup = 3 * o + x;
-                        t.tour++;
-                        break;
-                    }
-
-                    t.tabsuivi[coup] = -1;
-                }
-            }
-            else
-            {
-                Resultat(t, screen);
-                // cnt = 0;
-                //liberationmemoire(t);
-            }
-        }
-        */
-
-        // SDL_FreeSurface(ecran);
+       
+        
 
         /////////////////////
         t_prev = SDL_GetTicks();
@@ -234,6 +192,44 @@ void NewGame(SDL_Surface *screen, int *Mode)
             S.direction = 3;
         }
 
+          if(cnt==1)
+           {
+            affichertic(t, screen);
+            SDL_Flip(screen);
+            if (t.tour < 9 && atilganer(t.tabsuivi) == 0)
+            {
+                if ((t.tour + joueur) % 2 == 0) // tour du PC
+                {
+                    calcul_coup(t.tabsuivi);
+                    t.tour++;
+                }
+                else
+                {
+                    SDL_WaitEvent(&event);
+                    switch (event.type)
+                    {
+                    case SDL_QUIT:
+                        continuer = 0;
+                        break;
+                    case SDL_MOUSEBUTTONUP:
+                        x = event.button.x / 190;
+                        o = event.button.y / 190;
+                        coup = 3 * o + x;
+                        t.tour++;
+                        break;
+           }
+
+             t.tabsuivi[coup] = -1;
+           }
+            }
+            else 
+            {
+               
+                Resultat(t, screen);
+                 liberertic(t);
+              cnt=0;   
+            }
+            }
         //////////////////////////////////////
 
         afficheBack(bm, screen);
@@ -253,7 +249,7 @@ void NewGame(SDL_Surface *screen, int *Mode)
         Updateperso(&S, keys);
         dt = SDL_GetTicks() - t_prev;
 
-        // SDL_Flip(screen);
+        
         SDL_Delay(10);
         die = collisionBB(S, E);
         if (die == 1)
@@ -320,10 +316,10 @@ void NewGame(SDL_Surface *screen, int *Mode)
                 printf("you lost!!! %d ", Game);
             }
         }
-
+         
         SDL_Flip(screen);
     }
-
+    
     /////////////////////////////////////
     for (i = 0; i < 20; i++)
     {
@@ -353,7 +349,7 @@ void NewGame(SDL_Surface *screen, int *Mode)
     SDL_FreeSurface(e.lost);
     SDL_FreeSurface(e.win);
     SDL_FreeSurface(e.question);
-    liberationmemoire(t);
+    //liberationmemoire(t);
     /////////////////////////////////////
     freeEnnemy(E);
 
