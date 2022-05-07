@@ -33,6 +33,7 @@ void afficherEnnemi2(Ennemi E, SDL_Surface *screen);
 void animerEnnemi(Ennemi *E);
 void deplacer(Ennemi *E);
 int collisionBB(personne P, Ennemi E);
+int collisionBB2(personne P, Ennemi E);
 void deplacerIA(Ennemi *E, SDL_Rect posPerso);
 void freeEnnemy(Ennemi E);
 #endif // !Ennemy_H

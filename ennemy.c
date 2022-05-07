@@ -104,7 +104,10 @@ int collisionBB(personne p, Ennemi E)
     {
         return 0;
     }
+}
 
+int collisionBB2(personne p, Ennemi E)
+{
     if ((p.position_perso.x + p.sprite[p.num]->w > E.posSpike.x) && (p.position_perso.x < E.posSpike.x))
     {
         return 1;

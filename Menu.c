@@ -52,11 +52,13 @@ void NewGame(SDL_Surface *screen, int *Mode)
     SDL_Rect camera;
     minimap m;
     int temps;
-    int joueur,x,o,coup; 
+    int joueur, x, o, coup;
     /////////////////////
     int die = 0;
+    int die2 = 0;
     int continuer = 1;
     int boucle = 1;
+    int boucle1 = 1;
     int random;
     int Game;
     SDL_WM_SetCaption("NEW GAME", NULL);
@@ -77,58 +79,57 @@ void NewGame(SDL_Surface *screen, int *Mode)
     init_enigme(&eSF, "Resource Enigme 6/enigme.txt");
 
     /////////////////////
-   //mahmoud updates
-    //SDL_Surface * ecran;
-    //ecran=SDL_SetVideoMode(552,541,32,SDL_HWSURFACE|SDL_DOUBLEBUF);
-    int cnt=1;
-    
+    // mahmoud updates
+    // SDL_Surface * ecran;
+    // ecran=SDL_SetVideoMode(552,541,32,SDL_HWSURFACE|SDL_DOUBLEBUF);
+    int cnt = 1;
+
     while (continuer)
     {
-       //mahmoud tache blanche
-      /*while(cnt)
-     {
-        affichage(t,screen); 
-        SDL_Flip(screen);
-        if( t.tour<9 &&atilganer(t.tabsuivi)==0)
-        {
-         if((t.tour+joueur)%2==0)//tour du PC
-            {calcul_coup(t.tabsuivi);
-            t.tour++;}
-        else
-        {
-        SDL_WaitEvent(&event);
-        switch(event.type)
-        {
-        case SDL_QUIT:
-            continuer=0;
-            break;
-        case SDL_MOUSEBUTTONUP:
-            x=event.button.x/190;
-            o=event.button.y/190;
-            coup=3*o+x;
-            t.tour++;
-            break;
-        }
+        // mahmoud tache blanche
+        /*while(cnt)
+       {
+          affichage(t,screen);
+          SDL_Flip(screen);
+          if( t.tour<9 &&atilganer(t.tabsuivi)==0)
+          {
+           if((t.tour+joueur)%2==0)//tour du PC
+              {calcul_coup(t.tabsuivi);
+              t.tour++;}
+          else
+          {
+          SDL_WaitEvent(&event);
+          switch(event.type)
+          {
+          case SDL_QUIT:
+              continuer=0;
+              break;
+          case SDL_MOUSEBUTTONUP:
+              x=event.button.x/190;
+              o=event.button.y/190;
+              coup=3*o+x;
+              t.tour++;
+              break;
+          }
 
-        t.tabsuivi[coup]=-1;
-        }
-        }
-        else
-        {
-        Resultat(t,screen);
-       // cnt=0;
-        }
-     //}
-      */
+          t.tabsuivi[coup]=-1;
+          }
+          }
+          else
+          {
+          Resultat(t,screen);
+         // cnt=0;
+          }
+       //}
+        */
 
-      // SDL_FreeSurface(ecran);
-           
-        
+        // SDL_FreeSurface(ecran);
+
         /////////////////////
         t_prev = SDL_GetTicks();
         /////////////////////////////////////////
 
-        // deplacerIA(&E, p.position_perso);
+        deplacerIA(&E, S.position_perso);
 
         //////////////////////////////////////////
 
@@ -227,11 +228,9 @@ void NewGame(SDL_Surface *screen, int *Mode)
         {
             Saute(&S, impulsion);
             S.direction = 3;
-
         }
 
         //////////////////////////////////////
-     
 
         afficheBack(bm, screen);
         collision(screen, &S);
@@ -257,82 +256,70 @@ void NewGame(SDL_Surface *screen, int *Mode)
         {
             while (boucle == 1)
             {
-                random = rand() % 2;
-                random=0;
                 SDL_Flip(screen);
-                switch (random)
+                do
                 {
-                case 0:
-                    // boucle = Play_Enigme(&e, screen, &Game);
-                    do
-                    {
-                        afficherEnigme(eSF, screen);
-                        time = (SDL_GetTicks() - t_prev) / 1000;
-                        SDL_BlitSurface(eSF.anim.spritesheet, &eSF.anim.clips[eSF.anim.cliploaded], screen, &eSF.anim.pos);
-                        SDL_Flip(screen);
-                        switch (time)
-                        {
-                        case 5:
-                            animer(&eSF);
-                            break;
-
-                        case 10:
-                            animer(&eSF);
-                            break;
-
-                        case 15:
-                            animer(&eSF);
-                            break;
-
-                        case 20:
-                            animer(&eSF);
-                            break;
-
-                        case 25:
-                            animer(&eSF);
-                            break;
-
-                        case 30:
-                            animer(&eSF);
-                            break;
-                        }
-                        r = resolution(&continuer, &run);
-
-                    } while (time <= 30 && (r > 3 || r < 1) && continuer != 0);
-
-                    afficher_resultat(screen, eSF.reponsevrai, r, &eSF);
+                    afficherEnigme(eSF, screen);
+                    time = (SDL_GetTicks() - t_prev) / 1000;
+                    SDL_BlitSurface(eSF.anim.spritesheet, &eSF.anim.clips[eSF.anim.cliploaded], screen, &eSF.anim.pos);
                     SDL_Flip(screen);
-                    
-                    boucle = 0;
-                    break;
-                case 1:
+                    switch (time)
+                    {
+                    case 5:
+                        animer(&eSF);
+                        break;
 
-                    break;
-                }
-                
+                    case 10:
+                        animer(&eSF);
+                        break;
 
+                    case 15:
+                        animer(&eSF);
+                        break;
 
+                    case 20:
+                        animer(&eSF);
+                        break;
 
+                    case 25:
+                        animer(&eSF);
+                        break;
 
+                    case 30:
+                        animer(&eSF);
+                        break;
+                    }
+                    r = resolution(&continuer, &run);
 
+                } while (time <= 30 && (r > 3 || r < 1) && continuer != 0);
 
-
-/*
-                                if (Game)
-                                {
-                                    printf("you win!!!");
-                                    //////////////////// IF CORRECT DONT LOSE LIFE
-                                }
-                                else if (!Game)
-                                {
-                                    printf("you lost!!! %d ", Game);
-                                    //////////////////// IF INCORRECT LOSE LIFE
-                                }*/
+                afficher_resultat(screen, eSF.reponsevrai, r, &eSF);
+                SDL_Flip(screen);
+                boucle = 0;
             }
         }
+        die2 = collisionBB2(S, E);
+        if (die2 == 1)
+        {
+            while (boucle1 == 1)
+            {
+
+                boucle1 = Play_Enigme(&e, screen, &Game);
+            }
+
+            if (Game)
+            {
+                printf("you win!!!");
+            }
+            else if (!Game)
+            {
+                printf("you lost!!! %d ", Game);
+            }
+        }
+
         SDL_Flip(screen);
     }
- 
+
     /////////////////////////////////////
     for (i = 0; i < 20; i++)
     {
@@ -349,7 +336,7 @@ void NewGame(SDL_Surface *screen, int *Mode)
     SDL_FreeSurface(bm.image_flower);
     /////////////////////////////////////
     SDL_FreeSurface(eSF.img[0]);
-   
+
     SDL_FreeSurface(eSF.anim.spritesheet);
     /////////////////////////////////////
     for (i = 0; i < 5; i++)
@@ -365,7 +352,7 @@ void NewGame(SDL_Surface *screen, int *Mode)
     liberationmemoire(t);
     /////////////////////////////////////
     freeEnnemy(E);
-    
+
     fclose(fichier);
 }
 
