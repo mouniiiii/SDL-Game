@@ -10,6 +10,7 @@
 #include "Resource Back/collisionparfaite.h"
 #include "Resource Entite/ennemy.h"
 #include "Resource MiniMap/minimap.h"
+#include "Resource Menu/Header/tic.h"
 #include "Resource Enigme5/enigme.h"
 #include "Resource Enigme 6/EnigmeSF.h"
 ////////////////////////////////////////
