@@ -8,12 +8,12 @@ void initialisation(tic * t)
     for(i=0;i<9;i++)
     t-> tabsuivi[i]=0;
    
-    t->boxes=SDL_LoadBMP("tache blanche minimap/fond.bmp");
-    t->xs=SDL_LoadBMP("tache blanche minimap/xs.bmp");
-    t->os=SDL_LoadBMP("tache blanche minimap/os.bmp");
+    t->boxes=SDL_LoadBMP("Resource MiniMap/fond.bmp");
+    t->xs=SDL_LoadBMP("Resource MiniMap/xs.bmp");
+    t->os=SDL_LoadBMP("Resource MiniMap/os.bmp");
     t->joueur=1;
     t->tour=0;
-    t->font=TTF_OpenFont("tache blanche minimap/comic.ttf",40);
+    t->font=TTF_OpenFont("Resource MiniMap/comic.ttf",40);
     t->couleur.r=0;
     t->couleur.g=0;
     t->couleur.b=0;
