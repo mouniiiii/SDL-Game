@@ -79,13 +79,11 @@ void NewGame(SDL_Surface *screen, int *Mode)
     init_enigme(&eSF, "Resource Enigme 6/enigme.txt");
 
     /////////////////////
-   
+
     int cnt = 1;
 
     while (continuer)
     {
-       
-        
 
         /////////////////////
         t_prev = SDL_GetTicks();
@@ -192,8 +190,8 @@ void NewGame(SDL_Surface *screen, int *Mode)
             S.direction = 3;
         }
 
-          if(cnt==1)
-           {
+        if (cnt == 1)
+        {
             affichertic(t, screen);
             SDL_Flip(screen);
             if (t.tour < 9 && atilganer(t.tabsuivi) == 0)
@@ -217,19 +215,19 @@ void NewGame(SDL_Surface *screen, int *Mode)
                         coup = 3 * o + x;
                         t.tour++;
                         break;
-           }
+                    }
 
-             t.tabsuivi[coup] = -1;
-           }
+                    t.tabsuivi[coup] = -1;
+                }
             }
-            else 
+            else
             {
-               
+
                 Resultat(t, screen);
-                 liberertic(t);
-              cnt=0;   
+                liberertic(t);
+                cnt = 0;
             }
-            }
+        }
         //////////////////////////////////////
 
         afficheBack(bm, screen);
@@ -249,7 +247,6 @@ void NewGame(SDL_Surface *screen, int *Mode)
         Updateperso(&S, keys);
         dt = SDL_GetTicks() - t_prev;
 
-        
         SDL_Delay(10);
         die = collisionBB(S, E);
         if (die == 1)
@@ -316,10 +313,10 @@ void NewGame(SDL_Surface *screen, int *Mode)
                 printf("you lost!!! %d ", Game);
             }
         }
-         
+
         SDL_Flip(screen);
     }
-    
+
     /////////////////////////////////////
     for (i = 0; i < 20; i++)
     {
@@ -349,7 +346,7 @@ void NewGame(SDL_Surface *screen, int *Mode)
     SDL_FreeSurface(e.lost);
     SDL_FreeSurface(e.win);
     SDL_FreeSurface(e.question);
-    //liberationmemoire(t);
+    // liberationmemoire(t);
     /////////////////////////////////////
     freeEnnemy(E);
 
