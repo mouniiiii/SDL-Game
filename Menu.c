@@ -15,6 +15,7 @@
 #include "Resource Enigme 6/EnigmeSF.h"
 ////////////////////////////////////////
 
+
 void NewGame(SDL_Surface *screen, int *Mode)
 {
     SDL_Init(SDL_INIT_EVERYTHING);
@@ -80,7 +81,7 @@ void NewGame(SDL_Surface *screen, int *Mode)
 
     /////////////////////
 
-    int cnt = 900;
+    int cnt =900;
 
     while (continuer)
     { 
@@ -231,24 +232,24 @@ cnt--;
                     case SDL_MOUSEBUTTONUP:
                         x = event.button.x / 190;
                         o = event.button.y / 190;
-                        coup = 3 * o + x;
+                        coup = 3 *o+ x;
                         t.tour++;
                         break;
                     }
 
-                    t.tabsuivi[coup] = -1;
+                    t.tabsuivi[coup]= -1;
                 }
             }
             else
             {
 
                 Resultat(t, screen);
-                liberertic(t);
-                cnt = 0;
+               liberertic(t);
+               cnt = 0;
             }
         }
         //////////////////////////////////////
-
+         
         afficheBack(bm, screen);
         collision(screen, &S);
         animerBackground(&ba);
