@@ -44,7 +44,7 @@ void NewGame(SDL_Surface *screen, int *Mode)
     background ba, bm;
 
     ////////////////////
-    personne S,perso;
+    personne S;
     Uint8 *keys;
     Uint32 dt = 1, t_prev = 1;
     int impulsion = 6;
@@ -113,10 +113,10 @@ void NewGame(SDL_Surface *screen, int *Mode)
                 break;
             case SDLK_RIGHT:
 
-                if (collisionparfaite(screen, perso) == 10)
+                if (collisionparfaite(screen, S) == 10)
                 {
-                    //scrolling(&ba,2);	//scrollingymin;	
-				scrolling(&bm,0);
+                    scrolling(&ba, 0); // scrollingymin;
+                    scrolling(&bm, 0);
                     E.posSpike.x--;
                     E.posEnemy.x++;
                 }
@@ -124,59 +124,35 @@ void NewGame(SDL_Surface *screen, int *Mode)
                 break;
             case SDLK_LEFT:
 
-                if (collisionparfaite(screen, perso) == 10)
+                if (collisionparfaite(screen, S) == 10)
                 {
                     scrolling(&ba, 1); // scrolllingysar;
                     scrolling(&bm, 1);
-                    //E.posSpike.x++;
-                    //E.posEnemy.x--;
+                    E.posSpike.x++;
+                    E.posEnemy.x--;
                 }
 
                 break;
             case SDLK_UP:
 
-                if (collisionparfaite(screen, perso) == 10)
+                if (collisionparfaite(screen, S) == 10)
                 {
-                    //scrolling(&ba,1);//scrolllingysar;
-				scrolling(&bm,1);
+                    scrolling(&ba, 2); // scrollingymin;
+                    scrolling(&bm, 2);
                     // E.posSpike.y--;
                     // E.posEnemy.y--;
                 }
                 break;
             case SDLK_DOWN:
 
-                if (collisionparfaite(screen, perso) == 10)
+                if (collisionparfaite(screen, S) == 10)
                 {
-                    //scrolling(&ba,4);	//scrollingymin;	
-					scrolling(&bm,4);
+                    scrolling(&ba, 3); // scrollingymin;
+                    scrolling(&bm, 3);
                     // E.posSpike.y++;
                     // E.posEnemy.y++;
                 }
                 break;
-                    case SDLK_DOWN:
- 			 
- 		  		if ( collisionparfaite(screen,perso)==10){
-					//scrolling(&ba,5);	//scrollingymin;	
-					scrolling(&bm,5);
-				}			 
-                        break;
-                          case SDLK_d:
-                               if ( collisionparfaite(screen,perso)==10)
-                                      scrolling(&ba,2);
-                        break;
-                           case SDLK_q:
-                               if ( collisionparfaite(screen,perso)==10)
-                                      scrolling(&ba,3);
-                        break;
-                           case SDLK_z:
-                               if ( collisionparfaite(screen,S)==10)
-                                      scrolling(&ba,6);
-                        break;
-                           case SDLK_s:
-                               if ( collisionparfaite(screen,perso)==10)
-                                      scrolling(&ba,7);
-                        break;
-
             }
             break;
         }
