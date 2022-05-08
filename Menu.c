@@ -80,11 +80,14 @@ void NewGame(SDL_Surface *screen, int *Mode)
 
     /////////////////////
 
-    int cnt = 1;
+    int cnt = 900;
 
     while (continuer)
-    {
-
+    { 
+if(cnt>1)
+{
+cnt--;
+}
         /////////////////////
         t_prev = SDL_GetTicks();
         /////////////////////////////////////////
