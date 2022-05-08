@@ -39,7 +39,7 @@ void initBackMasque(background *b)
 
 	// camera
 	b->camera.x = 0;
-	b->camera.y = (b->imgback->h - SCREEN_H) / 2;
+	b->camera.y = 0;
 	b->camera.w = SCREEN_W / 2;
 	b->camera.h = SCREEN_H;
 }
@@ -54,7 +54,7 @@ void initBack2(background *b)
 	b->posback2.h = SCREEN_H;
 	// camera2
 	b->camera2.x = 0;
-	b->camera2.y = (b->imgback->h - SCREEN_H) / 2;
+	b->camera2.y = 0;
 	b->camera2.w = SCREEN_W / 2;
 	b->camera2.h = SCREEN_H;
 	// musique
