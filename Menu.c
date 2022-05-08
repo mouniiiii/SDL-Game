@@ -89,7 +89,7 @@ void NewGame(SDL_Surface *screen, int *Mode)
 
     /////////////////////
 
-    int cnt = 10000;
+    int cnt = 300;
 
     while (continuer)
     {
@@ -357,7 +357,7 @@ void NewGame(SDL_Surface *screen, int *Mode)
         }
         else
         {
-            // printf("\n NO COLLISION SENDING 0 TO SERIAL");
+            printf("\n NO COLLISION SENDING 0 TO SERIAL");
             arduinoWriteData(0);
         }
 
