@@ -56,7 +56,7 @@ void initBack2(background *b)
 	b->camera2.x = 0;
 	b->camera2.y = 0;
 	b->camera2.w = SCREEN_W / 2;
-	b->camera2.h = SCREEN_H;
+	b->camera2.h = SCREEN_H2;
 	// musique
 	b->son = Mix_LoadMUS("musique.mp3"); // Chargement de la musique
 	b->image_flower = IMG_Load("flower.png");
