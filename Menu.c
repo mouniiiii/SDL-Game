@@ -113,7 +113,7 @@ void NewGame(SDL_Surface *screen, int *Mode)
 
                 if (collisionparfaite(screen, S) == 10)
                 {
-                    scrolling(&ba, 0); // scrollingymin;
+                    //scrolling(&ba, 0); // scrollingymin;
                     scrolling(&bm, 0);
                     E.posSpike.x--;
                     E.posEnemy.x++;
@@ -124,7 +124,7 @@ void NewGame(SDL_Surface *screen, int *Mode)
 
                 if (collisionparfaite(screen, S) == 10)
                 {
-                    scrolling(&ba, 1); // scrolllingysar;
+                   // scrolling(&ba, 1); // scrolllingysar;
                     scrolling(&bm, 1);
                     E.posSpike.x++;
                     E.posEnemy.x--;
@@ -135,8 +135,8 @@ void NewGame(SDL_Surface *screen, int *Mode)
 
                 if (collisionparfaite(screen, S) == 10)
                 {
-                    scrolling(&ba, 2); // scrollingymin;
-                    scrolling(&bm, 2);
+                   // scrolling(&ba, 2); // scrollingymin;
+                    scrolling(&bm, 4);
                     // E.posSpike.y--;
                     // E.posEnemy.y--;
                 }
@@ -145,12 +145,28 @@ void NewGame(SDL_Surface *screen, int *Mode)
 
                 if (collisionparfaite(screen, S) == 10)
                 {
-                    scrolling(&ba, 3); // scrollingymin;
-                    scrolling(&bm, 3);
+                    //scrolling(&ba, 3); // scrollingymin;
+                    scrolling(&bm, 5);
                     // E.posSpike.y++;
                     // E.posEnemy.y++;
                 }
                 break;
+                    case SDLK_d:
+                               if ( collisionparfaite(screen,S)==10)
+                                      scrolling(&ba,2);
+                        break;
+                           case SDLK_q:
+                               if ( collisionparfaite(screen,S)==10)
+                                      scrolling(&ba,3);
+                        break;
+                           case SDLK_z:
+                               if ( collisionparfaite(screen,S)==10)
+                                      scrolling(&ba,6);
+                        break;
+                           case SDLK_s:
+                               if ( collisionparfaite(screen,S)==10)
+                                      scrolling(&ba,7);
+                        break;
             }
             break;
         }
