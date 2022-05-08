@@ -1,4 +1,8 @@
-#include "Resource Back/background.h"
+#include "background.h"
+
+/**
+ *@file background.c
+*/
 
 /*void initBack (background *b)
 {
@@ -9,133 +13,166 @@ b->posback.y=0;
 //camera
 b->camera.x=0;
 b->camera.y=0;
-b->camera.w=SCREEN_W;
+b->camera.w=SCREEN_W; 
 b->camera.h=SCREEN_H;
 //musique
 b->son=Mix_LoadMUS("musique.mp3"); //Chargement de la musique
 
 }
 */
-void initBackMasque(background *b)
-{
-	// background
-	b->imgback = SDL_LoadBMP("Resource Back/mapMasque.bmp");
-	b->posback.x = 0;
-	b->posback.y = 0;
 
-	// camera
-	b->camera.x = 0;
-	b->camera.y = 0;
-	b->camera.w = SCREEN_W;
-	b->camera.h = SCREEN_H;
+/**
+ *@brief initialisation du masque du background.
+ *@param b the background
+ *@return nothing
+*/
+
+
+
+void initBackMasque (background *b)
+{
+//background
+b->imgback=SDL_LoadBMP("mapMasque.bmp");
+b->posback.x=0;
+b->posback.y=0;
+b->posback.w=SCREEN_W/2;
+b->posback.h=SCREEN_H;
+
+//camera
+b->camera.x=0;
+b->camera.y=(b->imgback->h-SCREEN_H)/2;
+b->camera.w=SCREEN_W/2; 
+b->camera.h=SCREEN_H;
+
 }
 
-void initBack2(background *b)
+void initBack2 (background *b)
 {
-	// background2
-	b->imgback = IMG_Load("Resource Back/map.bmp");
-	b->posback2.x = 0;
-	b->posback2.y = 0;
-	// camera2
-	b->camera2.x = 0;
-	b->camera2.y = 0;
-	b->camera2.w = SCREEN_W;
-	b->camera2.h = SCREEN_H;
-	// musique
-	b->son = Mix_LoadMUS("Resource Back/musique.mp3"); // Chargement de la musique
-	b->image_flower = IMG_Load("Resource Back/flower.png");
-	b->pos_image_flower.x = 500;
-	b->pos_image_flower.y = 100;
+//background2
+b->imgback=IMG_Load("map.bmp");
+b->posback2.x=SCREEN_W/2;
+b->posback2.y=0;
+b->posback2.w=SCREEN_W/2; 
+b->posback2.h=SCREEN_H;
+//camera2
+b->camera2.x=0;
+b->camera2.y=(b->imgback->h-SCREEN_H)/2;
+b->camera2.w=SCREEN_W/2; 
+b->camera2.h=SCREEN_H;
+//musique
+b->son=Mix_LoadMUS("musique.mp3"); //Chargement de la musique
+	b->image_flower=IMG_Load("flower.png");  
+	b->pos_image_flower.x=500;
+	b->pos_image_flower.y=100;
+	
+	b->single_flower.w=56;
+	b->single_flower.h=107;
+	b->single_flower.x=0;
+	b->single_flower.y=0;
 
-	b->single_flower.w = 56;
-	b->single_flower.h = 107;
-	b->single_flower.x = 0;
-	b->single_flower.y = 0;
+	b->flower_num=0;
 
-	b->flower_num = 0;
 }
 
+/**
+ *@brief initialisation du background.
+ *@param b the background
+ *@return nothing
+*/
 void initialisation_back(background *b)
 {
-	// initBack(b);
+	//initBack(b);	
 	initBack2(b);
 }
 
-void afficheBack(background b, SDL_Surface *ecran)
+
+/**
+ *@brief affichage du background.
+ *@param b the background
+ *@param ecran the screen
+ *@return nothing
+*/
+void afficheBack (background b, SDL_Surface *ecran)
 {
-	/* On blitte par-dessus l'écran */
-	// Mix_PlayMusic(b.son, -1);
-	SDL_BlitSurface(b.imgback, &b.camera, ecran, &b.posback);
+/* On blitte par-dessus l'écran */
+Mix_PlayMusic(b.son, -1);
+SDL_BlitSurface(b.imgback,&b.camera,ecran,&b.posback);
 }
 
-void afficheBack2(background b, SDL_Surface *ecran)
+void afficheBack2 (background b, SDL_Surface *ecran)
 {
-	/* On blitte par-dessus l'écran */
+/* On blitte par-dessus l'écran */
+Mix_PlayMusic(b.son, -1); //Jouer infiniment la musique
+SDL_BlitSurface(b.imgback,&b.camera2,ecran,&b.posback2);
+displayFlower(b,ecran);
 
-	Mix_PlayMusic(b.son, -1); // Jouer infiniment la musique
-	SDL_BlitSurface(b.imgback, &b.camera2, ecran, &b.posback2);
-	displayFlower(b, ecran);
 }
 /*void afficher_back(background b, SDL_Surface *ecran)
 {
 	afficheBack(b,ecran);
 	afficheBack2(b,ecran);
-
+	
 }*/
 
-void scrolling(background *b, int direction)
+/**
+ *@brief to scroll the background to all direction.
+ *@param b the background
+ *@param direction the direction
+ *@return nothing
+*/
+
+void scrolling (background *b,int direction)
 {
-	const int speed = 1;
-	if (direction == 0)
-	{ // yminbac1
-		b->camera.x += speed;
+ const int speed=1;
+if (direction ==0)//rightbac1
+        b->camera.x+= 1;
+else if (direction ==1)//leftbac1
+        b->camera.x-=1;
+else if (direction ==2)//rightbac2
+        b->camera2.x+= 1;
+else if (direction ==3)//leftback2
+        b->camera2.x-= 1;
+else if (direction ==4)//upback1
+        b->camera.y-= 1;
+else if (direction ==5)//downback1
+        b->camera.y+= 1;
+else if (direction ==6)//upback2
+        b->camera2.y-= 1;
+else if (direction ==7)//downback2
+        b->camera2.y+= 1;
 
-		b->camera2.x += speed;
-	}
-	else if (direction == 1)
-	{ // ysarbac1
-		b->camera.x -= speed;
-
-		b->camera2.x -= speed;
-	}
-	else if (direction == 4)
-	{ // yminbac2
-		b->camera2.x += speed;
-	}
-	else if (direction == 7)
-	{ // isarback2
-		b->camera2.x -= speed;
-	}
-	else if (direction == 2)
-	{ // isarback2
-		b->camera.y -= speed;
-
-		b->camera2.y -= speed;
-	}
-	else if (direction == 3)
-	{ // isarback2
-		b->camera.y += speed;
-
-		b->camera2.y += speed;
-	}
 }
 
-void displayFlower(background b, SDL_Surface *ecran)
-{
-	SDL_BlitSurface(b.image_flower, &(b.single_flower), ecran, &b.pos_image_flower);
+/**
+ *@brief to blit the flower on the screen.
+ *@param b the background
+ *@param ecran the screen
+ *@return nothing
+*/
+
+
+void displayFlower(background b,SDL_Surface *ecran){
+			
+ 		SDL_BlitSurface(b.image_flower,&(b.single_flower), ecran, &b.pos_image_flower);
 }
-void animerBackground(background *b)
-{
 
-	if (b->flower_num >= 0 && b->flower_num < 8)
-	{
-		b->single_flower.x = b->flower_num * b->single_flower.w;
-		b->flower_num++;
-	}
+/**
+ *@brief to animate the flower.
+ *@param b the background
+ *@return nothing
+*/
 
-	if (b->flower_num == 8)
-	{
-		b->single_flower.x = b->flower_num * b->single_flower.w;
-		b->flower_num = 0;
+void animerBackground(background *b){
+		 	
+	if (b->flower_num >=0 && b->flower_num <8) {
+	b->single_flower.x = b->flower_num * b->single_flower.w;
+	b->flower_num++;
 	}
+	
+	if ( b->flower_num == 8) {
+	b->single_flower.x=b->flower_num * b->single_flower.w;
+	b->flower_num=0;
+	}
+ 
+	 
 }
