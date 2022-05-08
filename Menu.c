@@ -15,9 +15,18 @@
 #include "Resource Enigme 6/EnigmeSF.h"
 ////////////////////////////////////////
 
+int arduinoWriteData(int x);
+int arduinoReadData(int *x);
 
 void NewGame(SDL_Surface *screen, int *Mode)
 {
+
+    char received;
+    int DirectionArduino=0;
+
+//init Link with arduino
+system("stty -F /dev/ttyUSB0 9600 -parenb cs8 -cstopb");
+
     SDL_Init(SDL_INIT_EVERYTHING);
     FILE *fichier = NULL;
     fichier = fopen("Resource MiniMap/nomficher.txt", "a+");
@@ -81,7 +90,7 @@ void NewGame(SDL_Surface *screen, int *Mode)
 
     /////////////////////
 
-    int cnt =900;
+    int cnt =10000;
 
     while (continuer)
     { 
@@ -334,7 +343,31 @@ cnt--;
             }
         }
 
+    
         SDL_Flip(screen);
+
+//send date to arduino (0 or 1 or 2)
+if(collisionBB2(S,E) == 1){
+printf("\n COLLISION RIGHT SENDING 1 TO SERIAL");
+arduinoWriteData(1);
+} else if(collisionBB(S,E) == 1){
+printf("\n COLLISION LEFT SENDING 2 TO SERIAL");
+arduinoWriteData(2);
+} else {
+//printf("\n NO COLLISION SENDING 0 TO SERIAL");
+arduinoWriteData(0);
+}
+
+        //input from arduino
+arduinoReadData(&received); //lecture d’un entier via la arduinoReadData
+switch(received){
+case 0: DirectionArduino=0; //mise à jour de la direction (directionArduino)
+break;
+case 1:DirectionArduino=1; //mise à jour de la direction (directionArduino)
+break;
+case 2:DirectionArduino=2; //mise à jour de la direction (directionArduino)
+break;
+}
     }
 
     /////////////////////////////////////
@@ -495,3 +528,39 @@ void SetNorm(SDL_Surface *screen, int *Mode)
     *Mode = 0;
     screen = SDL_SetVideoMode(SCREEN_W, SCREEN_H, 32, SDL_HWSURFACE | SDL_ANYFORMAT);
 }
+
+//////////////////////////////////////////
+
+int arduinoWriteData(int x)
+{
+    char chemin[]="/dev/ttyUSB0";
+    FILE*f;
+
+    f=fopen(chemin,"w");
+    if(f == NULL)
+        return(-1);
+
+    fprintf(f,"%d",x);
+    fclose(f);
+
+    return(0);
+}
+
+int arduinoReadData(int *x)
+{
+    char chemin[]="/dev/ttyUSB0";
+    FILE*f;
+    char c;
+    f=fopen(chemin,"r");
+
+    if(f == NULL)
+        return(-1);
+
+    fscanf(f,"%d",x);
+
+    fclose(f);
+
+    return(0);
+}
+
+

@@ -21,6 +21,7 @@ void initialisertic(tic * t)
     t->postxt.y=0;
 }
 
+
 void affichertic(tic t,SDL_Surface *ecran ) 
 {
     int i;
