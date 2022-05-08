@@ -20,12 +20,11 @@ int arduinoReadData(int *x);
 
 void NewGame(SDL_Surface *screen, int *Mode)
 {
-
     char received;
-    int DirectionArduino=0;
+    int DirectionArduino = 0;
 
-//init Link with arduino
-system("stty -F /dev/ttyUSB0 9600 -parenb cs8 -cstopb");
+    // init Link with arduino
+    system("stty -F /dev/ttyUSB0 9600 -parenb cs8 -cstopb");
 
     SDL_Init(SDL_INIT_EVERYTHING);
     FILE *fichier = NULL;
@@ -90,14 +89,14 @@ system("stty -F /dev/ttyUSB0 9600 -parenb cs8 -cstopb");
 
     /////////////////////
 
-    int cnt =10000;
+    int cnt = 10000;
 
     while (continuer)
-    { 
-if(cnt>1)
-{
-cnt--;
-}
+    {
+        if (cnt > 1)
+        {
+            cnt--;
+        }
         /////////////////////
         t_prev = SDL_GetTicks();
         /////////////////////////////////////////
@@ -126,7 +125,7 @@ cnt--;
 
                 if (collisionparfaite(screen, S) == 10)
                 {
-                    //scrolling(&ba, 0); // scrollingymin;
+                    // scrolling(&ba, 0); // scrollingymin;
                     scrolling(&bm, 0);
                     E.posSpike.x--;
                     E.posEnemy.x++;
@@ -137,7 +136,7 @@ cnt--;
 
                 if (collisionparfaite(screen, S) == 10)
                 {
-                   // scrolling(&ba, 1); // scrolllingysar;
+                    // scrolling(&ba, 1); // scrolllingysar;
                     scrolling(&bm, 1);
                     E.posSpike.x++;
                     E.posEnemy.x--;
@@ -148,7 +147,7 @@ cnt--;
 
                 if (collisionparfaite(screen, S) == 10)
                 {
-                   // scrolling(&ba, 2); // scrollingymin;
+                    // scrolling(&ba, 2); // scrollingymin;
                     scrolling(&bm, 4);
                     // E.posSpike.y--;
                     // E.posEnemy.y--;
@@ -158,28 +157,28 @@ cnt--;
 
                 if (collisionparfaite(screen, S) == 10)
                 {
-                    //scrolling(&ba, 3); // scrollingymin;
+                    // scrolling(&ba, 3); // scrollingymin;
                     scrolling(&bm, 5);
                     // E.posSpike.y++;
                     // E.posEnemy.y++;
                 }
                 break;
-                    case SDLK_d:
-                               if ( collisionparfaite(screen,S)==10)
-                                      scrolling(&ba,2);
-                        break;
-                           case SDLK_q:
-                               if ( collisionparfaite(screen,S)==10)
-                                      scrolling(&ba,3);
-                        break;
-                           case SDLK_z:
-                               if ( collisionparfaite(screen,S)==10)
-                                      scrolling(&ba,6);
-                        break;
-                           case SDLK_s:
-                               if ( collisionparfaite(screen,S)==10)
-                                      scrolling(&ba,7);
-                        break;
+            case SDLK_d:
+                if (collisionparfaite(screen, S) == 10)
+                    scrolling(&ba, 2);
+                break;
+            case SDLK_q:
+                if (collisionparfaite(screen, S) == 10)
+                    scrolling(&ba, 3);
+                break;
+            case SDLK_z:
+                if (collisionparfaite(screen, S) == 10)
+                    scrolling(&ba, 6);
+                break;
+            case SDLK_s:
+                if (collisionparfaite(screen, S) == 10)
+                    scrolling(&ba, 7);
+                break;
             }
             break;
         }
@@ -241,24 +240,24 @@ cnt--;
                     case SDL_MOUSEBUTTONUP:
                         x = event.button.x / 190;
                         o = event.button.y / 190;
-                        coup = 3 *o+ x;
+                        coup = 3 * o + x;
                         t.tour++;
                         break;
                     }
 
-                    t.tabsuivi[coup]= -1;
+                    t.tabsuivi[coup] = -1;
                 }
             }
             else
             {
 
                 Resultat(t, screen);
-               liberertic(t);
-               cnt = 0;
+                liberertic(t);
+                cnt = 0;
             }
         }
         //////////////////////////////////////
-         
+
         afficheBack(bm, screen);
         collision(screen, &S);
         animerBackground(&ba);
@@ -343,31 +342,39 @@ cnt--;
             }
         }
 
-    
         SDL_Flip(screen);
 
-//send date to arduino (0 or 1 or 2)
-if(collisionBB2(S,E) == 1){
-printf("\n COLLISION RIGHT SENDING 1 TO SERIAL");
-arduinoWriteData(1);
-} else if(collisionBB(S,E) == 1){
-printf("\n COLLISION LEFT SENDING 2 TO SERIAL");
-arduinoWriteData(2);
-} else {
-//printf("\n NO COLLISION SENDING 0 TO SERIAL");
-arduinoWriteData(0);
-}
+        // send date to arduino (0 or 1 or 2)
+        if (collisionBB2(S, E) == 1)
+        {
+            printf("\n COLLISION RIGHT SENDING 1 TO SERIAL");
+            arduinoWriteData(1);
+        }
+        else if (collisionBB(S, E) == 1)
+        {
+            printf("\n COLLISION LEFT SENDING 2 TO SERIAL");
+            arduinoWriteData(2);
+        }
+        else
+        {
+            // printf("\n NO COLLISION SENDING 0 TO SERIAL");
+            arduinoWriteData(0);
+        }
 
-        //input from arduino
-arduinoReadData(&received); //lecture d’un entier via la arduinoReadData
-switch(received){
-case 0: DirectionArduino=0; //mise à jour de la direction (directionArduino)
-break;
-case 1:DirectionArduino=1; //mise à jour de la direction (directionArduino)
-break;
-case 2:DirectionArduino=2; //mise à jour de la direction (directionArduino)
-break;
-}
+        // input from arduino
+        arduinoReadData(&received); // lecture d’un entier via la arduinoReadData
+        switch (received)
+        {
+        case 0:
+            DirectionArduino = 0; // mise à jour de la direction (directionArduino)
+            break;
+        case 1:
+            DirectionArduino = 1; // mise à jour de la direction (directionArduino)
+            break;
+        case 2:
+            DirectionArduino = 2; // mise à jour de la direction (directionArduino)
+            break;
+        }
     }
 
     /////////////////////////////////////
@@ -533,34 +540,32 @@ void SetNorm(SDL_Surface *screen, int *Mode)
 
 int arduinoWriteData(int x)
 {
-    char chemin[]="/dev/ttyUSB0";
-    FILE*f;
+    char chemin[] = "/dev/ttyUSB0";
+    FILE *f;
 
-    f=fopen(chemin,"w");
-    if(f == NULL)
-        return(-1);
+    f = fopen(chemin, "w");
+    if (f == NULL)
+        return (-1);
 
-    fprintf(f,"%d",x);
+    fprintf(f, "%d", x);
     fclose(f);
 
-    return(0);
+    return (0);
 }
 
 int arduinoReadData(int *x)
 {
-    char chemin[]="/dev/ttyUSB0";
-    FILE*f;
+    char chemin[] = "/dev/ttyUSB0";
+    FILE *f;
     char c;
-    f=fopen(chemin,"r");
+    f = fopen(chemin, "r");
 
-    if(f == NULL)
-        return(-1);
+    if (f == NULL)
+        return (-1);
 
-    fscanf(f,"%d",x);
+    fscanf(f, "%d", x);
 
     fclose(f);
 
-    return(0);
+    return (0);
 }
-
-
