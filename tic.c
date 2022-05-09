@@ -45,9 +45,6 @@ void Resultat(tic t, SDL_Surface *ecran)
 {
     
     char msg[20];
-
-   
-    affichertic(t, ecran);
     switch (atilganer(t.tabsuivi))
     {
     case 0:
