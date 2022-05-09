@@ -43,11 +43,10 @@ void affichertic(tic t, SDL_Surface *ecran)
 
 void Resultat(tic t, SDL_Surface *ecran)
 {
-    SDL_Rect pos;
+    
     char msg[20];
 
-    pos.x = 0;
-    pos.y = 0;
+   
     affichertic(t, ecran);
     switch (atilganer(t.tabsuivi))
     {
