@@ -190,7 +190,7 @@ void NewGame(SDL_Surface *screen, int *Mode)
             S.direction = -1;
             S.deplacement = -1;
         }
-        if (keys[SDLK_RIGHT] == 1)
+        if (keys[SDLK_RIGHT] == 1 || DirectionArduino==1)
         {
             S.deplacement = 1;
             S.direction = 0;
@@ -207,7 +207,7 @@ void NewGame(SDL_Surface *screen, int *Mode)
         {
             S.acceleration = 0;
         }
-        if (keys[SDLK_LEFT])
+        if (keys[SDLK_LEFT] || DirectionArduino==2)
         {
             S.deplacement = 0;
             S.direction = 1;
