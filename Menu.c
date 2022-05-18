@@ -90,6 +90,14 @@ void NewGame(SDL_Surface *screen, int *Mode)
     /////////////////////
 
     int cnt = 300;
+    ////////
+
+    SDL_Joystick *g_pStick;
+    int g_nStickButtons;
+    g_pStick = SDL_JoystickOpen(0);
+    g_nStickButtons = SDL_JoystickNumButtons(g_pStick);
+    SDL_JoystickEventState(SDL_ENABLE);
+    printf("%d", g_nStickButtons);
 
     while (continuer)
     {
@@ -190,7 +198,7 @@ void NewGame(SDL_Surface *screen, int *Mode)
             S.direction = -1;
             S.deplacement = -1;
         }
-        if (keys[SDLK_RIGHT] == 1 || DirectionArduino==1)
+        if (keys[SDLK_RIGHT] == 1 || DirectionArduino == 1)
         {
             S.deplacement = 1;
             S.direction = 0;
@@ -207,7 +215,7 @@ void NewGame(SDL_Surface *screen, int *Mode)
         {
             S.acceleration = 0;
         }
-        if (keys[SDLK_LEFT] || DirectionArduino==2)
+        if (keys[SDLK_LEFT] || DirectionArduino == 2)
         {
             S.deplacement = 0;
             S.direction = 1;
@@ -217,7 +225,21 @@ void NewGame(SDL_Surface *screen, int *Mode)
             Saute(&S, impulsion);
             S.direction = 3;
         }
-
+        //////////
+        for (int index = 0; index < g_nStickButtons; index++)
+        {
+            if (SDL_JoystickGetButton(g_pStick, index))
+            {
+                S.deplacement = 1;
+                S.direction = 0;
+            }
+            else
+            {
+                S.deplacement = 0;
+                S.direction = 1;
+            }
+        }
+        ///////////
         if (cnt == 1)
         {
             affichertic(t, screen);
@@ -328,7 +350,6 @@ void NewGame(SDL_Surface *screen, int *Mode)
         {
             while (boucle1 == 1)
             {
-
                 boucle1 = Play_Enigme(&e, screen, &Game);
             }
 
@@ -347,17 +368,17 @@ void NewGame(SDL_Surface *screen, int *Mode)
         // send date to arduino (0 or 1 or 2)
         if (collisionBB2(S, E) == 1)
         {
-            printf("\n COLLISION RIGHT SENDING 1 TO SERIAL");
+            // printf("\n COLLISION RIGHT SENDING 1 TO SERIAL");
             arduinoWriteData(1);
         }
         else if (collisionBB(S, E) == 1)
         {
-            printf("\n COLLISION LEFT SENDING 2 TO SERIAL");
+            // printf("\n COLLISION LEFT SENDING 2 TO SERIAL");
             arduinoWriteData(2);
         }
         else
         {
-            printf("\n NO COLLISION SENDING 0 TO SERIAL");
+            // printf("\n NO COLLISION SENDING 0 TO SERIAL");
             arduinoWriteData(0);
         }
 
@@ -407,6 +428,7 @@ void NewGame(SDL_Surface *screen, int *Mode)
     SDL_FreeSurface(e.win);
     SDL_FreeSurface(e.question);
     // liberationmemoire(t);
+    SDL_JoystickClose(g_pStick);
     /////////////////////////////////////
     freeEnnemy(E);
 
