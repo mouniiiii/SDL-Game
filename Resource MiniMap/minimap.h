@@ -29,6 +29,6 @@ void afficherminimap (minimap m, SDL_Surface * screen);
 void affichertemp (int *temps,SDL_Surface *screen,TTF_Font *police);
 void sauvegarder( int score, char nomjoueur[], char nomfichier[]);
 void meilleur( char nomfichier[], int *score, char nomjoueur[]);
-void liberer(minimap *m);
+//void liberer(minimap *m);
 #endif
 
